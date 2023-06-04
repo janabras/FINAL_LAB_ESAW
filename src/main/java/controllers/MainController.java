@@ -37,19 +37,20 @@ public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(false);
-		
+		// No session
 		if ((session==null || session.getAttribute("user")==null) && request.getParameter("uname")==null) {
 			System.out.println("MainController: NO active session has been found.");
 			// Load all tweets
 			List<Tweet> tweets = Collections.emptyList();
 			ManageTweets tweetManager = new ManageTweets();
-			tweets = tweetManager.getRecentTweets(0,4);
+			tweets = tweetManager.getRecentTweets(0,10);
 			tweetManager.finalize();
 			request.setAttribute("tweets",tweets);
 			// Load templates
 			request.setAttribute("menu","ViewMenuNotLogged.jsp");
 			request.setAttribute("content","ViewTweets.jsp");
 		}
+		// Request to get the edit
 		else if(request.getParameter("uname")!=null) {
 			String uname = request.getParameter("uname");
 			ManageUsers userManager = new ManageUsers();
@@ -61,6 +62,7 @@ public class MainController extends HttpServlet {
 			request.setAttribute("menu","ViewMenuNotLogged.jsp");
 			request.setAttribute("content","ViewUserInfo.jsp");
 		}
+		// Registered and go home
 		else {
 			System.out.println("Main Controller: active session has been found.");
 			request.setAttribute("menu","ViewMenuLogged.jsp");

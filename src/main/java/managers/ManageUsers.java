@@ -80,6 +80,24 @@ public class ManageUsers {
 		
 		return user;
 	}
+	
+	/* Modify User */
+	public void modifyUser(User u) {
+		String query = "UPDATE users SET name = ?, mail = ? WHERE id = ?;";
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,u.getName());
+			statement.setString(2,u.getMail());
+			statement.setInt(3,u.getId());
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 		
 	// Add new user
 	public void addUser(User user) {

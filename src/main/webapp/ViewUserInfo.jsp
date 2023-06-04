@@ -8,7 +8,16 @@
   <p class="w3-left-align"> <i class="fa fa-id-card fa-fw w3-margin-right"></i> ${user.name} </p>
   <p class="w3-left-align"> <i class="fa fa-id-badge fa-fw w3-margin-right"></i> ${user.mail} </p>
   <c:if test="${user != null && user.id != -1}">
-  	<button type="button" class="editUser w3-row w3-button w3-green w3-section"><i class="fa fa-user-plus"></i> &nbsp;Edit</button>
+  	<a id="UserController" type="button" class="editUser w3-row w3-button w3-green w3-section" href="">
+  		<i class="fa fa-user-plus"></i> &nbsp;Edit
+  	</a>
   </c:if> 
  </div>
 <br>
+<script>
+	$(document).on("click","#UserController", function(event) {
+ 		$("#content").load("UserController");
+		// $("#lcolumn").load("GetNotFollowedUsers");
+		event.preventDefault();
+  	});
+</script>
