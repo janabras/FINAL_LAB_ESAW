@@ -4,7 +4,7 @@
  <div id="${t.id}" class="w3-container w3-card w3-section w3-white w3-round w3-animate-opacity"><br>
    <img src="imgs/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
    <span class="w3-right w3-opacity"> ${t.postDateTime} </span>
-   <h4> ${t.uname} </h4><br>
+   <h4> <a class="menu w3-bar-item w3-button" href="?uname=${t.uname}">${t.uname}</a></h4><br>
    <hr class="w3-clear">
    <p> ${t.content} </p>
    <c:if test="${user != null}">

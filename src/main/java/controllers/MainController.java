@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import managers.ManageTweets;
+import managers.ManageUsers;
 import models.Tweet;
+import models.User;
 
 /**
  * Servlet implementation class MainController
@@ -36,7 +38,7 @@ public class MainController extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		
-		if (session==null || session.getAttribute("user")==null) {
+		if ((session==null || session.getAttribute("user")==null) && request.getParameter("uname")==null) {
 			System.out.println("MainController: NO active session has been found.");
 			// Load all tweets
 			List<Tweet> tweets = Collections.emptyList();
@@ -47,6 +49,17 @@ public class MainController extends HttpServlet {
 			// Load templates
 			request.setAttribute("menu","ViewMenuNotLogged.jsp");
 			request.setAttribute("content","ViewTweets.jsp");
+		}
+		else if(request.getParameter("uname")!=null) {
+			String uname = request.getParameter("uname");
+			ManageUsers userManager = new ManageUsers();
+			User user = userManager.getUser(uname);
+			user.setId(-1); // Identify that it's not the owner
+			userManager.finalize();
+			request.setAttribute("user", user);
+			// Load templates
+			request.setAttribute("menu","ViewMenuNotLogged.jsp");
+			request.setAttribute("content","ViewUserInfo.jsp");
 		}
 		else {
 			System.out.println("Main Controller: active session has been found.");

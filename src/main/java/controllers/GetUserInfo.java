@@ -31,16 +31,14 @@ public class GetUserInfo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// Get by username or by the actual user
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute("user");
-		
 		if (session != null || user != null) {
 			ManageUsers userManager = new ManageUsers();
 			user = userManager.getUser(user.getId());
 			userManager.finalize();
 		}
-		
 		request.setAttribute("user",user);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewUserInfo.jsp"); 
 		dispatcher.include(request,response);

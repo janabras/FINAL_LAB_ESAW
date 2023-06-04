@@ -56,6 +56,30 @@ public class ManageUsers {
 		
 		return user;
 	}
+	/* Get a user given its Username*/
+	public User getUser(String uname) {
+		String query = "SELECT id,name,mail FROM users WHERE name = ? ;";
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		User user = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,uname);
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				user.setId(rs.getInt("id"));
+				user.setName(rs.getString("name"));
+				user.setMail(rs.getString("mail"));
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 		
 	// Add new user
 	public void addUser(User user) {
