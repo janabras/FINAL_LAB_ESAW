@@ -42,9 +42,9 @@ public class GetUserTweets extends HttpServlet {
 		if (session != null || user != null) {
 			ManageTweets tweetManager = new ManageTweets();
 			tweets = tweetManager.getUserTweets(user.getId(),0,4);
+			request.setAttribute("user", user.getName());
 			tweetManager.finalize();
 		}
-
 		request.setAttribute("tweets",tweets);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewTweets.jsp"); 
 		dispatcher.forward(request,response);

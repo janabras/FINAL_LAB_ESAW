@@ -90,5 +90,31 @@ public class ManageTweets {
 		return  l;
 	}
 	
+	/* Get all tweets for Landing Page, most recent */
+	public List<Tweet> getRecentTweets(Integer start, Integer end) {
+		 String query = "SELECT tweets.id,tweets.uid,tweets.postdatetime,tweets.content,users.name FROM tweets INNER JOIN users ON tweets.uid = users.id ORDER BY postdatetime DESC LIMIT ?,? ;";
+		 PreparedStatement statement = null;
+		 List<Tweet> l = new ArrayList<Tweet>();
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setInt(1,start);
+			 statement.setInt(2,end);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 Tweet tweet = new Tweet();
+      		     tweet.setId(rs.getInt("id"));
+				 tweet.setUid(rs.getInt("uid"));
+				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
+				 tweet.setContent(rs.getString("content"));
+				 tweet.setUname(rs.getString("name"));
+				 l.add(tweet);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
+	}
 	
 }

@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import managers.ManageTweets;
+import models.Tweet;
 
 /**
  * Servlet implementation class MainController
@@ -33,8 +38,15 @@ public class MainController extends HttpServlet {
 		
 		if (session==null || session.getAttribute("user")==null) {
 			System.out.println("MainController: NO active session has been found.");
+			// Load all tweets
+			List<Tweet> tweets = Collections.emptyList();
+			ManageTweets tweetManager = new ManageTweets();
+			tweets = tweetManager.getRecentTweets(0,4);
+			tweetManager.finalize();
+			request.setAttribute("tweets",tweets);
+			// Load templates
 			request.setAttribute("menu","ViewMenuNotLogged.jsp");
-			request.setAttribute("content","ViewLoginForm.jsp");
+			request.setAttribute("content","ViewTweets.jsp");
 		}
 		else {
 			System.out.println("Main Controller: active session has been found.");
