@@ -38,13 +38,7 @@ public class UserController extends HttpServlet {
 		
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute("user");
-		// No session
-		if ((session!=null || user!=null)) {
-			System.out.println("UserController: Modifying the user");
-			ManageUsers userManager = new ManageUsers();
-			user = userManager.getUser(user.getId());
-			userManager.finalize();
-		}
+
 		request.setAttribute("user", user);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("EditUserInfo.jsp");
 		dispatcher.forward(request, response);	
