@@ -13,6 +13,7 @@ public class User implements java.io.Serializable {
 	private String name = "";
 	private String mail = "";
 	private String pwd = "";
+	private boolean isAdmin;
 
 	private HashMap<String,Boolean> error = null;
 	
@@ -77,5 +78,13 @@ public class User implements java.io.Serializable {
 	public void setError(String name, boolean error) {
 		this.error.put(name, error);
 	}
+	
+	public boolean isAdmin() {
+        return isAdmin;
+    }
+	
+	public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
 		
 }
