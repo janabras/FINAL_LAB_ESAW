@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,14 +60,27 @@ public class MainController extends HttpServlet {
 			userManager.finalize();
 			request.setAttribute("user", user);
 			// Load templates
-			request.setAttribute("menu","ViewMenuNotLogged.jsp");
+			if(Objects.nonNull(user.getName())) {
+				request.setAttribute("menu","ViewMenuLogged.jsp");
+			}
+			else {
+				request.setAttribute("menu","ViewMenuNotLogged.jsp");
+			}
 			request.setAttribute("content","ViewUserInfo.jsp");
 		}
 		// Registered and go home
 		else {
+			// Load all tweets
+			List<Tweet> tweets = Collections.emptyList();
+			ManageTweets tweetManager = new ManageTweets();
+			User user = (User) session.getAttribute("user");
+			tweets = tweetManager.getLoggedTweets(user.getId(), 0, 10);
+			tweetManager.finalize();
+			request.setAttribute("tweets",tweets);
+			request.setAttribute("user", user);
 			System.out.println("Main Controller: active session has been found.");
 			request.setAttribute("menu","ViewMenuLogged.jsp");
-			request.setAttribute("content","ViewOwnTimeline.jsp");
+			request.setAttribute("content","ViewTweets.jsp");
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");

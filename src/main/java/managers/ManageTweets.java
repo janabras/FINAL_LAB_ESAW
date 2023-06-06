@@ -117,4 +117,40 @@ public class ManageTweets {
 		return  l;
 	}
 	
+	/* Get all tweets for Landing Page, most recent */
+	public List<Tweet> getLoggedTweets(Integer id, Integer start, Integer end) {
+		 String query = "SELECT t.id, t.uid, t.postdatetime, t.content, u.name\n"
+		 		+ "FROM tweets t\n"
+		 		+ "LEFT JOIN follows f ON t.uid = f.fid\n"
+		 		+ "JOIN users u ON (t.uid = u.id OR f.uid = u.id)\n"
+		 		+ "WHERE f.uid = ? OR t.uid = ?\n"
+		 		+ "ORDER BY t.postdatetime DESC\n"
+		 		+ "LIMIT ?, ?;\n"
+		 		+ "";
+		 PreparedStatement statement = null;
+		 List<Tweet> l = new ArrayList<Tweet>();
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setInt(1,id);
+			 statement.setInt(2,id);
+			 statement.setInt(3,start);
+			 statement.setInt(4,end);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 Tweet tweet = new Tweet();
+      		     tweet.setId(rs.getInt("id"));
+				 tweet.setUid(rs.getInt("uid"));
+				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
+				 tweet.setContent(rs.getString("content"));
+				 tweet.setUname(rs.getString("name"));
+				 l.add(tweet);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
+	}
+	
 }
