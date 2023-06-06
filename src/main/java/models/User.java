@@ -60,7 +60,7 @@ public class User implements java.io.Serializable {
 	}
 	
 	public void setPwd(String pwd) {
-		String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
+		String regex = "^(?=.*[A-Z])(?=.*[!@#$&*-])(?=.{8,})\\S+$";
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(pwd);
 		if (matcher.matches()) {

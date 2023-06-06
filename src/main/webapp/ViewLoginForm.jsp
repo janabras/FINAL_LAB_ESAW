@@ -18,6 +18,6 @@
     <label for="user" class="w3-text-theme"> User name </label><br>
     <input class="w3-input w3-border w3-light-grey" type="text" name="name" placeholder="Username" value="${user.name}" required autocomplete="username"><br>
     <label for="pwd1" class="w3-text-theme"> Password: </label><br>
-  	<input class="w3-input w3-border w3-light-grey" type="password" id="pwd1" name="pwd" placeholder="Password" value="${user.pwd}" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$" autocomplete="current-password"><br><br>
+  	<input class="w3-input w3-border w3-light-grey" type="password" id="pwd1" name="pwd" placeholder="Password" value="${user.pwd}" required autocomplete="current-password"><br><br>
     <input class="w3-btn w3-theme" type="submit" name="sumbit" value="Submit"></p>
 </form>
