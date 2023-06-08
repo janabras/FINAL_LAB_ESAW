@@ -10,10 +10,10 @@
    <hr class="w3-clear">
    <p> ${t.content} </p>
    <c:if test="${user != null}">
-   	<button type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa-solid fa-heart"></i> &nbsp;Like</button>
+   	<button type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button>
    </c:if>
    <c:if test="${user == null}">
-   	<button disabled type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa-solid fa-heart"></i> &nbsp;Like</button>
+   	<button disabled type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button>
    </c:if>
    
    <%--<c:if test="${user != null}">
