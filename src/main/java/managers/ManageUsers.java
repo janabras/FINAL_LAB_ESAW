@@ -34,19 +34,20 @@ public class ManageUsers {
 	
 	/* Get a user given its PK*/
 	public User getUser(Integer id) {
-		String query = "SELECT id,name,mail FROM users WHERE id = ? ;";
+		String query = "SELECT id,name,mail,isAdmin FROM users WHERE id = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
 			statement = db.prepareStatement(query);
-			statement.setInt(1,id);
+			statement.setInt(1, id);
 			rs = statement.executeQuery();
 			if (rs.next()) {
 				user = new User();
 				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setMail(rs.getString("mail"));
+				user.setAdmin(rs.getBoolean("isAdmin"));
 			}
 			rs.close();
 			statement.close();
@@ -58,19 +59,20 @@ public class ManageUsers {
 	}
 	/* Get a user given its Username*/
 	public User getUser(String uname) {
-		String query = "SELECT id,name,mail FROM users WHERE name = ? ;";
+		String query = "SELECT id,name,mail,isAdmin FROM users WHERE name = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
 		try {
 			statement = db.prepareStatement(query);
-			statement.setString(1,uname);
+			statement.setString(1, uname);
 			rs = statement.executeQuery();
 			if (rs.next()) {
 				user = new User();
 				user.setId(rs.getInt("id"));
 				user.setName(rs.getString("name"));
 				user.setMail(rs.getString("mail"));
+				user.setAdmin(rs.getBoolean("isAdmin"));
 			}
 			rs.close();
 			statement.close();
@@ -83,13 +85,14 @@ public class ManageUsers {
 	
 	/* Modify User */
 	public void modifyUser(User u) {
-		String query = "UPDATE users SET name = ?, mail = ? WHERE id = ?;";
+		String query = "UPDATE users SET name = ?, mail = ?, isAdmin = ? WHERE id = ?;";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
-			statement.setString(1,u.getName());
-			statement.setString(2,u.getMail());
-			statement.setInt(3,u.getId());
+			statement.setString(1, u.getName());
+			statement.setString(2, u.getMail());
+			statement.setBoolean(3, u.isAdmin());
+			statement.setInt(4, u.getId());
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLIntegrityConstraintViolationException e) {
@@ -98,24 +101,25 @@ public class ManageUsers {
 			e.printStackTrace();
 		}
 	}
-		
+	
 	// Add new user
-	public void addUser(User user) {
-		String query = "INSERT INTO users (name,mail,pwd) VALUES (?,?,?)";
-		PreparedStatement statement = null;
-		try {
-			statement = db.prepareStatement(query);
-			statement.setString(1,user.getName());
-			statement.setString(2,user.getMail());
-			statement.setString(3,user.getPwd());
-			statement.executeUpdate();
-			statement.close();
-		} catch (SQLIntegrityConstraintViolationException e) {
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
-			e.printStackTrace();
+		public void addUser(User user) {
+			String query = "INSERT INTO users (name, mail, pwd, isAdmin) VALUES (?, ?, ?, ?)";
+			PreparedStatement statement = null;
+			try {
+				statement = db.prepareStatement(query);
+				statement.setString(1, user.getName());
+				statement.setString(2, user.getMail());
+				statement.setString(3, user.getPwd());
+				statement.setBoolean(4, user.isAdmin());
+				statement.executeUpdate();
+				statement.close();
+			} catch (SQLIntegrityConstraintViolationException e) {
+				System.out.println(e.getMessage());
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-	}
 	
 	// Follow a user
 	public void followUser(Integer uid, Integer fid) {
@@ -324,6 +328,19 @@ public class ManageUsers {
 	private boolean hasValue(String val) {
 		return((val != null) && (!val.equals("")));
 	}
+	
+	 public void DeleteUserAccount(int id) {
+	        String query = "DELETE FROM users WHERE id = ? ";
+	        PreparedStatement statement = null;
+	        try {
+	            statement = db.prepareStatement(query);
+	            statement.setInt(1, id);
+	            statement.executeUpdate();
+	            statement.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 		
 	
 	// TODO: add other methods 
