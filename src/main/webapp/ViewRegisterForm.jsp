@@ -27,7 +27,7 @@
   <label for="mail" class="w3-text-theme"> Mail  </label><br>
   <input class="w3-input w3-border w3-light-grey" type="email" id="mail" name="mail" placeholder="Mail" value="${user.mail}" required autocomplete="email"><br>
   <label for="pwd1" class="w3-text-theme"> Password: </label><br>
-  <input class="w3-input w3-border w3-light-grey" type="password" id="pwd1" name="pwd" placeholder="Password" value="${user.pwd}" required pattern="^(?=.*[A-Z])(?=.*[!@#$&*-])(?=.{8,})\S+$" autocomplete="new-password"><br>
+  <input class="w3-input w3-border w3-light-grey" type="password" id="pwd1" name="pwd" placeholder="Password" value="${user.pwd}" required pattern="^(?=.*[A-Z])(?=.*[!@#$&*\-])(?=.{8,})\S+$" autocomplete="new-password"><br>
   <label for="pwd2" class="w3-text-theme"> Confirm Password: </label><br>
   <input class="w3-input w3-border w3-light-grey" type="password" id="pwd2" placeholder="Confirm Password" value="${user.pwd}" required autocomplete="new-password"><br><br>
   <input class="w3-btn w3-theme" type="submit" name="sumbit" value="Submit"></p>
