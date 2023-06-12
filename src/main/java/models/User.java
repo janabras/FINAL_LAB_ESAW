@@ -1,5 +1,6 @@
 package models;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +14,58 @@ public class User implements java.io.Serializable {
 	private String name = "";
 	private String mail = "";
 	private String pwd = "";
+	private Timestamp dob;
+	private String sport_interests;
+	private String biography;
+	public Timestamp getDob() {
+		return dob;
+	}
+
+
+	public void setDob(Timestamp dob) {
+		this.dob = dob;
+	}
+
+
+	public String getSport_interests() {
+		return sport_interests;
+	}
+
+
+	public void setSport_interests(String sport_interests) {
+		this.sport_interests = sport_interests;
+	}
+
+
+	public String getBiography() {
+		return biography;
+	}
+
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+
+	public String getPicture() {
+		return picture;
+	}
+
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	private String picture = "";
+
+	public String getImage() {
+		return picture;
+	}
+
+
+	public void setImage(String image) {
+		this.picture = image;
+	}
 
 	private HashMap<String,Boolean> error = null;
 	

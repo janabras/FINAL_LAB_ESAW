@@ -38,6 +38,8 @@ public class GetFollowedUsers extends HttpServlet {
 		List<User> users = Collections.emptyList();
 		
 		HttpSession session = request.getSession(false);
+		
+		// Following Users
 		User user = (User) session.getAttribute("user");
 
 		if (session != null || user != null) {
@@ -45,10 +47,23 @@ public class GetFollowedUsers extends HttpServlet {
 			ManageUsers userManager = new ManageUsers();
 			users = userManager.getFollowedUsers(user.getId(),0,4);
 			userManager.finalize();
-		
+			
 		}
 
-		request.setAttribute("users",users);
+		request.setAttribute("followingUsers",users);
+		
+		// Followed Users
+		user = (User) session.getAttribute("user");
+
+		if (session != null || user != null) {
+		
+			ManageUsers userManager = new ManageUsers();
+			users = userManager.getFollowersUsers(user.getId(),0,4);
+			userManager.finalize();
+			
+		}
+
+		request.setAttribute("followersUsers",users);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewFollowedUsers.jsp"); 
 		dispatcher.forward(request,response);
 		

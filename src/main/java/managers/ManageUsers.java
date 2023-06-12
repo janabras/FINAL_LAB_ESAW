@@ -177,16 +177,18 @@ public class ManageUsers {
 		return  l;
 	}
 	
-	public List<User> getNotFollowedUsers(Integer id, Integer start, Integer end) {
-		 String query = "SELECT id,name FROM users WHERE id NOT IN (SELECT id FROM users,follows WHERE id = fid AND uid = ?) AND id <> ? ORDER BY name LIMIT ?,?;";
+	public List<User> getNotFollowedUsers(Integer id, String interests, Integer start, Integer end) {
+		// Modify this to suggest by same hobbies
+		 String query = "SELECT id,name FROM users WHERE id NOT IN (SELECT id FROM users,follows WHERE id = fid AND uid = ?) AND id <> ? AND sport_interests = ? ORDER BY name LIMIT ?,?;";
 		 PreparedStatement statement = null;
 		 List<User> l = new ArrayList<User>();
 		 try {
 			 statement = db.prepareStatement(query);
 			 statement.setInt(1,id);
 			 statement.setInt(2, id);
-			 statement.setInt(3,start);
-			 statement.setInt(4,end);
+			 statement.setString(3, interests);
+			 statement.setInt(4,start);
+			 statement.setInt(5,end);
 			 ResultSet rs = statement.executeQuery();
 			 while (rs.next()) {
 				 User user = new User();
@@ -204,6 +206,30 @@ public class ManageUsers {
 	
 	public List<User> getFollowedUsers(Integer id, Integer start, Integer end) {
 		 String query = "SELECT id,name FROM users,follows WHERE id = fid AND uid = ? ORDER BY name LIMIT ?,?;";
+		 PreparedStatement statement = null;
+		 List<User> l = new ArrayList<User>();
+		 try {
+			 statement = db.prepareStatement(query);
+			 statement.setInt(1,id);
+			 statement.setInt(2,start);
+			 statement.setInt(3,end);
+			 ResultSet rs = statement.executeQuery();
+			 while (rs.next()) {
+				 User user = new User();
+				 user.setId(rs.getInt("id"));
+				 user.setName(rs.getString("name"));
+				 l.add(user);
+			 }
+			 rs.close();
+			 statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return  l;
+	}
+	
+	public List<User> getFollowersUsers(Integer id, Integer start, Integer end) {
+		 String query = "SELECT id,name FROM users,follows WHERE id = uid AND fid = ? ORDER BY name LIMIT ?,?;";
 		 PreparedStatement statement = null;
 		 List<User> l = new ArrayList<User>();
 		 try {

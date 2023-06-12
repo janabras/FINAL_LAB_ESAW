@@ -43,7 +43,7 @@ public class GetNotFollowedUsers extends HttpServlet {
 		if (session != null || user != null) {
 		
 			ManageUsers userManager = new ManageUsers();
-			users = userManager.getNotFollowedUsers(user.getId(),0,4);
+			users = userManager.getNotFollowedUsers(user.getId(), user.getSport_interests(), 0, 4);
 			userManager.finalize();
 		
 		}
