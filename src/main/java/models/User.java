@@ -17,6 +17,9 @@ public class User implements java.io.Serializable {
 	private Timestamp dob;
 	private String sport_interests;
 	private String biography;
+	private Boolean isAdmin;
+	private String picture = "";
+	
 	public Timestamp getDob() {
 		return dob;
 	}
@@ -56,16 +59,7 @@ public class User implements java.io.Serializable {
 		this.picture = picture;
 	}
 
-	private String picture = "";
-
-	public String getImage() {
-		return picture;
-	}
-
-
-	public void setImage(String image) {
-		this.picture = image;
-	}
+	
 
 	private HashMap<String,Boolean> error = null;
 	
