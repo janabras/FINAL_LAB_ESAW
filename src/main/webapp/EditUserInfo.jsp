@@ -3,7 +3,7 @@
 
 <div class="w3-container w3-card w3-round w3-white w3-section w3-center">
   <h4>Edit your profile</h4>
-  <p><img src="${user.image}" id="avatarImage" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+  <p><img src="${user.picture}" id="avatarImage" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
   <hr>
   <form action="EditProfile" method="post" enctype="multipart/form-data">
     <p class="w3-left-align">

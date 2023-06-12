@@ -35,22 +35,15 @@ public class RegisterController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	   System.out.print("RegisterController: ");
-	   User user = new User();
-	   ManageUsers manager = new ManageUsers();
-	   boolean cn = false;
-	   boolean cm = false;
+
 	
 	   try {
 	
-		   BeanUtils.populate(user, request.getParameterMap());
+		   	User user = new User();
+			ManageUsers manager = new ManageUsers();
+			BeanUtils.populate(user, request.getParameterMap());
 		   
-		   cn = manager.checkUser(user.getName());
-		   cm = manager.chekMail(user.getMail());
-		   
-		   user.setError("user", cn);
-		   user.setError("mail", cm);
-		   
-		   if (manager.isComplete(user) && !cn && !cm) {
+		   if (manager.isComplete(user) && manager.correctAge(user)) {
 			   
 			   manager.addUser(user);
 			   manager.finalize();

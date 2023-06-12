@@ -1,10 +1,13 @@
 package managers;
 
+import java.util.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,7 +37,7 @@ public class ManageUsers {
 	
 	/* Get a user given its PK*/
 	public User getUser(Integer id) {
-		String query = "SELECT id,name,mail,isAdmin FROM users WHERE id = ? ;";
+		String query = "SELECT id,name,mail FROM users WHERE id = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
@@ -45,9 +48,8 @@ public class ManageUsers {
 			if (rs.next()) {
 				user = new User();
 				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setMail(rs.getString("mail"));
-				user.setAdmin(rs.getBoolean("isAdmin"));
+				user.setNameAndEmail(rs.getString("name"), rs.getString("mail"));
+				// user.setAdmin(rs.getBoolean("isAdmin"));
 			}
 			rs.close();
 			statement.close();
@@ -59,7 +61,7 @@ public class ManageUsers {
 	}
 	/* Get a user given its Username*/
 	public User getUser(String uname) {
-		String query = "SELECT id,name,mail,isAdmin FROM users WHERE name = ? ;";
+		String query = "SELECT id,name,mail FROM users WHERE name = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
@@ -70,29 +72,27 @@ public class ManageUsers {
 			if (rs.next()) {
 				user = new User();
 				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setMail(rs.getString("mail"));
-				user.setAdmin(rs.getBoolean("isAdmin"));
+				user.setNameAndEmail(rs.getString("name"), rs.getString("mail"));
+				// user.setAdmin(rs.getBoolean("isAdmin"));
 			}
 			rs.close();
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return user;
 	}
 	
 	/* Modify User */
 	public void modifyUser(User u) {
-		String query = "UPDATE users SET name = ?, mail = ?, isAdmin = ? WHERE id = ?;";
+		String query = "UPDATE users SET name = ?, mail = ? WHERE id = ?;";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1, u.getName());
 			statement.setString(2, u.getMail());
-			statement.setBoolean(3, u.isAdmin());
-			statement.setInt(4, u.getId());
+			// statement.setBoolean(3, u.isAdmin());
+			statement.setInt(3, u.getId());
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLIntegrityConstraintViolationException e) {
@@ -103,24 +103,45 @@ public class ManageUsers {
 	}
 	
 	// Add new user
-		public void addUser(User user) {
-			String query = "INSERT INTO users (name, mail, pwd, isAdmin) VALUES (?, ?, ?, ?)";
-			PreparedStatement statement = null;
-			try {
-				statement = db.prepareStatement(query);
-				statement.setString(1, user.getName());
-				statement.setString(2, user.getMail());
-				statement.setString(3, user.getPwd());
-				statement.setBoolean(4, user.isAdmin());
-				statement.executeUpdate();
-				statement.close();
-			} catch (SQLIntegrityConstraintViolationException e) {
-				System.out.println(e.getMessage());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	public void addUser(User user) {
+		String query = "INSERT INTO users (name, mail, pwd, dob, sport_interests) VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1, user.getName());
+			statement.setString(2, user.getMail());
+			statement.setString(3, user.getPwd());
+			statement.setDate(4,(java.sql.Date) user.getDob());
+			statement.setString(5, Arrays.toString(user.getSport_interests()));
+			// statement.setBoolean(4, user.isAdmin());
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-	
+	}
+		
+	public boolean isAvaiable(String value, String field) {
+		String query = "SELECT COUNT("+field+") AS count FROM users WHERE "+field+"=?";
+		PreparedStatement statement = null;
+		boolean returnStatement = false;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,value);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int val = rs.getInt("count");
+				if (val == 0)
+					returnStatement = true;
+			}
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return returnStatement;
+	}
 	// Follow a user
 	public void followUser(Integer uid, Integer fid) {
 		String query = "INSERT INTO follows (uid,fid) VALUES (?,?)";
@@ -181,7 +202,7 @@ public class ManageUsers {
 		return  l;
 	}
 	
-	public List<User> getNotFollowedUsers(Integer id, String interests, Integer start, Integer end) {
+	public List<User> getNotFollowedUsers(Integer id, String[] interests, Integer start, Integer end) {
 		// Modify this to suggest by same hobbies
 		 String query = "SELECT id,name FROM users WHERE id NOT IN (SELECT id FROM users,follows WHERE id = fid AND uid = ?) AND id <> ? AND sport_interests = ? ORDER BY name LIMIT ?,?;";
 		 PreparedStatement statement = null;
@@ -190,7 +211,7 @@ public class ManageUsers {
 			 statement = db.prepareStatement(query);
 			 statement.setInt(1,id);
 			 statement.setInt(2, id);
-			 statement.setString(3, interests);
+			 statement.setString(3, Arrays.toString(interests));
 			 statement.setInt(4,start);
 			 statement.setInt(5,end);
 			 ResultSet rs = statement.executeQuery();
@@ -341,9 +362,17 @@ public class ManageUsers {
 		
 	/*Check if all the fields are filled correctly */
 	public boolean isComplete(User user) {
-	    return(hasValue(user.getName()) &&
-	    	   hasValue(user.getMail()) &&
-	    	   hasValue(user.getPwd()) );
+		return(hasValue(user.getName()) &&
+				hasValue(user.getMail()) &&
+				hasValue(user.getDob().toString()) &&
+				hasValue(user.getPwd()));
+	}
+	
+	public boolean correctAge(User user) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.YEAR, -13);
+		Date thirteenYearsAgo = calendar.getTime();
+		return user.getDob().before(thirteenYearsAgo);
 	}
 	
 	public boolean isLoginComplete(User user) {

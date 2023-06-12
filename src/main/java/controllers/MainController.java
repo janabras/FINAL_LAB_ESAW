@@ -55,8 +55,9 @@ public class MainController extends HttpServlet {
 		else if(request.getParameter("uname")!=null) {
 			String uname = request.getParameter("uname");
 			ManageUsers userManager = new ManageUsers();
+			System.out.println("Uname: " + uname);
 			User user = userManager.getUser(uname);
-			user.setId(-1); // Identify that it's not the owner
+			if(Objects.isNull(user.getId())) user.setId(-1); // Identify that it's not the owner
 			userManager.finalize();
 			request.setAttribute("user", user);
 			// Load templates

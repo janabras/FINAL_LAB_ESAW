@@ -1,12 +1,18 @@
 package models;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import managers.ManageUsers;
+
 public class User implements java.io.Serializable {
 	
+	ManageUsers manager = new ManageUsers();
 
 	private static final long serialVersionUID = 1L;
 	
@@ -14,28 +20,43 @@ public class User implements java.io.Serializable {
 	private String name = "";
 	private String mail = "";
 	private String pwd = "";
-	private Timestamp dob;
-	private String sport_interests;
+	private Date dob;
+	private String[] sport_interests;
 	private String biography;
 	private Boolean isAdmin;
 	private String picture = "";
 	
-	public Timestamp getDob() {
+	public Date getDob() {
 		return dob;
 	}
 
-
-	public void setDob(Timestamp dob) {
+	public static long getDateDiff(java.util.Date date1, java.util.Date date2, TimeUnit timeUnit) {
+		long diffInMillies = date2.getTime() - date1.getTime();
+		return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
+	}
+	
+	public void setDob(Date dob) {
+		java.util.Date currDate = new java.util.Date();    
+		java.util.Date dobUtil = new java.util.Date(dob.getTime());
 		this.dob = dob;
+		
+		if (getDateDiff(dobUtil, currDate, TimeUnit.DAYS) < 365 * 13) {
+			error.put("age", true);
+			//error[7] = true;
+		} else {
+			this.dob = dob;
+			// error[7] = false;
+			System.out.println("Date: " + dobUtil);
+		}
 	}
 
 
-	public String getSport_interests() {
+	public String[] getSport_interests() {
 		return sport_interests;
 	}
 
 
-	public void setSport_interests(String sport_interests) {
+	public void setSport_interests(String[] sport_interests) {
 		this.sport_interests = sport_interests;
 	}
 
@@ -67,6 +88,7 @@ public class User implements java.io.Serializable {
 		 error = new HashMap<String, Boolean>();
 		 error.put("user", false);
 		 error.put("mail", false);
+		 error.put("age", false);
 	}
 	
 	
@@ -83,7 +105,28 @@ public class User implements java.io.Serializable {
 	}
 	
 	public void setName(String name) {
+		if (name.length() > 50) {
+			// error[1] = true;
+			error.put("user", true);
+			this.name = "";
+		}
+		else if (!manager.isAvaiable(name, "name")) {
+			// error[0] = true;
+			// error[1] = false;
+			error.put("user", true);
+			this.name = name;
+			System.out.println(name + " No disponible");
+		} else {
+			// error[0] = false;
+			// error[1] = false;
+			this.name = name;
+			
+			System.out.println("Username: " + name);
+		}
+	}
+	public void setNameAndEmail(String name, String mail) {
 		this.name = name;
+		this.mail = mail;
 	}
 	
 	public String getMail() {
@@ -95,9 +138,20 @@ public class User implements java.io.Serializable {
 		Pattern pattern = Pattern.compile(regex);
 		Matcher matcher = pattern.matcher(mail);
 		if (matcher.matches()) {
-			this.mail = mail;
+			if (!manager.isAvaiable(mail, "mail")) {
+				// error[4] = false;
+				// error[3] = true;
+				this.mail = mail;
+				error.put("mail", true);
+			} else {
+				// error[4] = false;
+				// error[3] = false;
+				this.mail = mail;
+				System.out.println(mail);
+			}
 		} else {
-			error.put("mail", true);
+			// error[4] = true;
+			this.mail = "";
 		}
 		
 	}
