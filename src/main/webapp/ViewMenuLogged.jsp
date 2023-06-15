@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" session="false"%>
 
 <div class="w3-bar">
-	<a class="w3-bar-item w3-button" href="MainController"> <i class="fa fa-home" aria-hidden="true"></i> </a> 
+	<a class="w3-bar-item w3-button" href="MainController"> Home </a> 
 	<a class="menu w3-bar-item w3-button w3-hide-small" id="GetOwnTimeline" href=#> MyPosts </a>
 	<a class="menu w3-bar-item w3-button w3-hide-small" id="GetFollowedTweets" href=#> FriendsTweets </a>
 	<a class="menu w3-bar-item w3-button w3-hide-small" id="GetNotFollowedUsers" href=#> FindFriends </a>

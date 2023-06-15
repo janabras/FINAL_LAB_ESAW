@@ -14,8 +14,8 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$('#lcolumn').load('GetNotFollowedUsers');
-	$('#rcolumn').load('GetUserInfo');
+	// $('#lcolumn').load('GetNotFollowedUsers');
+	// $('#rcolumn').load('GetUserInfo');
 	$.ajaxSetup({ cache: false }); //Avoids Internet Explorer caching!	
 	$(document).on("click",".menu",function(event) {
 		$('#content').load($(this).attr('id'));

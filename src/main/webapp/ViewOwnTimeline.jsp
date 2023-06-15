@@ -4,7 +4,7 @@
  <script type="text/javascript">
  $(document).ready(function(){
 	$('#navigation').load('MenuController');
-	$('#lcolumn').load('GetNotFollowedUsers');
+	$('#lcolumn').load('GetOwnLeftTimeline');
 	$('#rcolumn').load('GetUserInfo');
 	$('#iterator').load('GetUserTweets');
  });
