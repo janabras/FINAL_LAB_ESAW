@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -42,6 +43,12 @@ public class GetUserTweets extends HttpServlet {
 		if (session != null || user != null) {
 			ManageTweets tweetManager = new ManageTweets();
 			tweets = tweetManager.getUserTweets(user.getId(),0,4);
+			
+            for (Iterator<Tweet> iterator = tweets.iterator(); iterator.hasNext();) {
+                Tweet next = iterator.next();
+                next.setLiked(tweetManager.isLikedTweet(user.getId(), next.getId()));
+            }
+            
 			request.setAttribute("user", user.getName());
 			tweetManager.finalize();
 		}

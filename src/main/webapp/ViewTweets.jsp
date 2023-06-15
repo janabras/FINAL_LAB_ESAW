@@ -29,7 +29,12 @@ $('.likeTweet').click(function () {
    <p> ${t.content} </p>
    <c:if test="${user != null}">
    
+   <c:if test="${!t.isLiked}">
    	<button id="button_${t.id}" type="button" class="likeTweet w3-button w3-light-grey w3-hover-red w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button> <span id="likes_${t.id}">${t.likes}</span>
+   </c:if>
+   <c:if test="${t.isLiked}">
+   	<button id="button_${t.id}" type="button" class="likeTweet w3-button w3-theme w3-hover-light-grey w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button> <span id="likes_${t.id}">${t.likes}</span>
+   </c:if>
    
    </c:if>
    <c:if test="${user == null}">

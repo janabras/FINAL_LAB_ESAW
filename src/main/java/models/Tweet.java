@@ -10,9 +10,11 @@ public class Tweet implements java.io.Serializable {
 	 private String uname;
 	 private Timestamp postDateTime;
 	 private String content;
-	 private int likes;
 	 
-	private boolean isLiked;
+
+	private int likes;
+	 
+	private boolean isLiked = false;
 	 private int numRetweets;
 	 private boolean isRetweeted;
 	 
@@ -67,5 +69,11 @@ public class Tweet implements java.io.Serializable {
 		public void setLikes(int likes) {
 			this.likes = likes;
 		}
+		public boolean getIsLiked() {
+			return isLiked;
+		}
 
+		public void setLiked(boolean isLiked) {
+			this.isLiked = isLiked;
+		}
 }
