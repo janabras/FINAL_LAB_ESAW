@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<script src="js/form.js"></script>
 <c:if test = "${user.error['user']}">
 <div class="w3-panel w3-theme-l4 w3-display-container">
   <span onclick="this.parentElement.style.display='none'"

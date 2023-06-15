@@ -85,6 +85,7 @@ public class MainController extends HttpServlet {
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+		response.setContentType("text/html");
 		dispatcher.forward(request, response);	}
 
 	/**

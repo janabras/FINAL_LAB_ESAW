@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
-
+import java.io.BufferedOutputStream;
 import org.apache.commons.beanutils.BeanUtils;
-
+import java.io.FileOutputStream;
 
 import managers.ManageUsers;
 import models.User;
@@ -45,10 +45,33 @@ public class EditProfile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(false);
         User user = (User) session.getAttribute("user");
+        
         if (session != null && user != null) {
             ManageUsers userManager = new ManageUsers();
             try {
                 BeanUtils.populate(user, request.getParameterMap());
+                System.out.println("1");
+                Part filePart = request.getPart("picture");
+                System.out.println("2");
+
+                if (filePart != null && filePart.getSize() > 0) {
+                	InputStream fileContent = filePart.getInputStream();
+                    System.out.println("3");
+
+                	String fileName = "avatar_" + user.getName() + ".png";
+                    String pathAvatars = "imgs/avatars";
+                    File outputFile = new File(pathAvatars, fileName);
+                    
+                    try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
+                        byte[] buffer = new byte[8192];
+                        int bytesRead;
+                        while ((bytesRead = fileContent.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                    }
+                    
+                }
+                
                 /*
                 // Get image
                 Part filePart = request.getPart("picture");
