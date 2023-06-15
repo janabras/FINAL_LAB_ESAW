@@ -59,6 +59,12 @@ $(document).ready(function(){
 		event.preventDefault();
 	});
 	
+	/* Add Like */
+    $(document).on("click", ".likeTweet", function (event) {
+        var tweet = $(this).parent();
+        $.post("AddTweetLike", {id: $(this).parent().attr("id")});
+        event.preventDefault();
+    });
 
 });
 </script>

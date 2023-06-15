@@ -7,14 +7,12 @@ $('.likeTweet').click(function () {
 	var id_tweet = $(this).parent().attr("id");
 	var likes = $("#likes_" + id_tweet).text();
 	if($("#button_" + id_tweet).hasClass('w3-light-grey')){
-		$("#button_" + id_tweet).removeClass('w3-light-grey').addClass('w3-theme');
-		$("#button_" + id_tweet).removeClass('w3-hover-red').addClass('w3-hover-light-grey');
+		$("#button_" + id_tweet).removeClass('w3-light-grey w3-hover-red').addClass('w3-theme w3-hover-light-grey');
 		$("#likes_" + id_tweet).text(parseInt(likes) + 1);
 		
 	}
 	else {
-		$("#button_" + id_tweet).removeClass('w3-theme').addClass('w3-light-grey');
-		$("#button_" + id_tweet).removeClass('w3-hover-light-grey').addClass('w3-hover-red');
+		$("#button_" + id_tweet).removeClass('w3-theme w3-hover-light-grey').addClass('w3-light-grey w3-hover-red');
 		$("#likes_" + id_tweet).text(parseInt(likes) - 1);
 	}
 
@@ -30,7 +28,9 @@ $('.likeTweet').click(function () {
    <hr class="w3-clear">
    <p> ${t.content} </p>
    <c:if test="${user != null}">
+   
    	<button id="button_${t.id}" type="button" class="likeTweet w3-button w3-light-grey w3-hover-red w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button> <span id="likes_${t.id}">${t.likes}</span>
+   
    </c:if>
    <c:if test="${user == null}">
    	<button disabled type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button>

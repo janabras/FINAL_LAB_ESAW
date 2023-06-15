@@ -46,6 +46,64 @@ public class ManageTweets {
 		}
 	}
 	
+	/* Like/UndoLike a tweet */
+    public void addLikeTweet(Integer id, Integer tid) {
+        String query = "SELECT COUNT(*) FROM likes WHERE tid = ? AND id = ?;"; //Check if the user likes the tweet
+        String query_likes = "SELECT likes FROM tweets WHERE id = ?;"; //Gets number of likes
+        String query_update = "UPDATE tweets SET likes=? WHERE id = ?;"; //Updates number of likes
+        String query_insert = "INSERT INTO likes (id, tid) VALUES (?,?)"; //Insert one like on table
+        String query_delete = "DELETE FROM likes WHERE id=? AND tid = ?"; //Deletes like
+        int n_likes_final;
+        int n_likes = 0;
+        PreparedStatement statement = null;
+        PreparedStatement statement_likes = null;
+        PreparedStatement statement_update = null;
+        PreparedStatement statement_insert = null;
+        PreparedStatement statement_delete = null;
+        try {
+            statement = db.prepareStatement(query);
+            statement.setInt(1, tid);
+            statement.setInt(2, id);
+            ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				int val = rs.getInt("COUNT(*)");
+				
+				statement_likes = db.prepareStatement(query_likes);
+				statement_likes.setInt(1, tid);
+	            ResultSet rs_likes = statement_likes.executeQuery();
+	            
+	            if (rs.next()) {
+	            	n_likes = rs_likes.getInt(1);
+	            }
+	            
+				if (val > 0) { //user likes the tweet (delete likes)
+					statement_delete = db.prepareStatement(query_delete);
+					statement_delete.setInt(1, id);
+					statement_delete.setInt(2, tid);
+					n_likes_final = n_likes - 1;
+					statement_delete.executeUpdate();
+					statement_delete.close();
+				} else {
+					statement_insert = db.prepareStatement(query_insert);
+					statement_insert.setInt(1, id);
+					statement_insert.setInt(2, tid);
+		            n_likes_final = n_likes + 1;
+		            statement_insert.executeUpdate();
+		            statement_insert.close();
+				}
+				statement_update = db.prepareStatement(query_update);
+				statement_update.setInt(1, n_likes_final);
+				statement_update.setInt(2, tid);
+				statement_update.executeUpdate();
+				statement_update.close();
+				statement.close();
+				statement_likes.close();
+			}
+        } catch (SQLException e) {
+    			e.printStackTrace();
+      }
+    }
+	
 	/* Delete existing tweet */
 	public void deleteTweet(Integer id,Integer uid) {
 		String query = "DELETE FROM tweets WHERE id = ? AND uid=?";
@@ -80,6 +138,7 @@ public class ManageTweets {
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 tweet.setUname(rs.getString("name"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -107,6 +166,7 @@ public class ManageTweets {
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 tweet.setUname(rs.getString("name"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -136,6 +196,7 @@ public class ManageTweets {
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 tweet.setUname(rs.getString("name"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
@@ -164,6 +225,7 @@ public class ManageTweets {
 				 tweet.setPostDateTime(rs.getTimestamp("postdatetime"));
 				 tweet.setContent(rs.getString("content"));
 				 tweet.setUname(rs.getString("name"));
+				 tweet.setLikes(rs.getInt("likes"));
 				 l.add(tweet);
 			 }
 			 rs.close();
