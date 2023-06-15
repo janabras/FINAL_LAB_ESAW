@@ -50,9 +50,13 @@ public class EditProfile extends HttpServlet {
             ManageUsers userManager = new ManageUsers();
             try {
                 BeanUtils.populate(user, request.getParameterMap());
-                System.out.println("1");
+                
+                
+                
+                /*
+                System.out.println("1get");
                 Part filePart = request.getPart("picture");
-                System.out.println("2");
+                System.out.println("2get");
 
                 if (filePart != null && filePart.getSize() > 0) {
                 	InputStream fileContent = filePart.getInputStream();
@@ -72,7 +76,7 @@ public class EditProfile extends HttpServlet {
                     
                 }
                 
-                /*
+                
                 // Get image
                 Part filePart = request.getPart("picture");
                 if (filePart != null && filePart.getSize() > 0) {
@@ -112,6 +116,8 @@ public class EditProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+        System.out.println("1post");
+
 		doGet(request, response);
 	}
 

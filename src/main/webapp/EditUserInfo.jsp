@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<!DOCTYPE html">
+<html>
+<body>
 <div class="w3-container w3-card w3-round w3-white w3-section w3-center">
   <h4>Edit your profile</h4>
   <p><img src="${user.picture}" id="avatarImage" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
@@ -16,16 +18,16 @@
     </p>
     <p class="w3-left-align">
       <i class="fa fa-image fa-fw w3-margin-right"></i>
-      <input type="file" name="picture" accept="image/*" onchange="previewImage(event)">
+      <input type="file" id="picture" name="picture" accept="image/*" onchange="previewImage(event)">
     </p>
     <c:if test="${user != null && user.id != -1}">
-      <button type="submit" class="w3-row w3-button w3-green w3-section">
+      <button type="submit" class="w3-row w3-button w3-green w3-section" value="Upload">
         <i class="fa fa-save"></i>&nbsp;Save Changes
       </button>
     </c:if>
   </form>
 </div>
-
+ </body>
 <script>
   function previewImage(event) {
     var reader = new FileReader();
@@ -36,3 +38,4 @@
     reader.readAsDataURL(event.target.files[0]);
   }
 </script>
+</html>

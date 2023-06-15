@@ -64,7 +64,7 @@ public class ManageTweets {
 	
 	/* Get tweets from a user given start and end*/
 	public List<Tweet> getUserTweets(Integer uid,Integer start, Integer end) {
-		 String query = "SELECT tweets.id,tweets.uid,tweets.postdatetime,tweets.content,users.name FROM tweets INNER JOIN users ON tweets.uid = users.id where tweets.uid = ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT * FROM tweets INNER JOIN users ON tweets.uid = users.id where tweets.uid = ? ORDER BY tweets.postdatetime DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweet> l = new ArrayList<Tweet>();
 		 try {
@@ -92,7 +92,7 @@ public class ManageTweets {
 	
 	/* Get all tweets for Landing Page, most recent */
 	public List<Tweet> getRecentTweets(Integer start, Integer end) {
-		 String query = "SELECT tweets.id,tweets.uid,tweets.postdatetime,tweets.content,users.name FROM tweets INNER JOIN users ON tweets.uid = users.id ORDER BY postdatetime DESC LIMIT ?,? ;";
+		 String query = "SELECT tweets.id,tweets.uid,tweets.postdatetime,tweets.content, tweets.likes,users.name FROM tweets INNER JOIN users ON tweets.uid = users.id ORDER BY postdatetime DESC LIMIT ?,? ;";
 		 PreparedStatement statement = null;
 		 List<Tweet> l = new ArrayList<Tweet>();
 		 try {
@@ -119,7 +119,7 @@ public class ManageTweets {
 	
 	/* Get all tweets for Landing Page, most recent */
 	public List<Tweet> getLoggedTweets(Integer id, Integer start, Integer end) {
-		 String query = "SELECT t.id, t.uid, t.postdatetime, t.content, u.name FROM tweets t LEFT JOIN users u ON (t.uid = u.id) WHERE t.uid != ? ORDER BY t.postdatetime DESC LIMIT ?, ?;";
+		 String query = "SELECT t.id, t.uid, t.postdatetime, t.content, t.likes u.name FROM tweets t LEFT JOIN users u ON (t.uid = u.id) WHERE t.uid != ? ORDER BY t.postdatetime DESC LIMIT ?, ?;";
 		 PreparedStatement statement = null;
 		 List<Tweet> l = new ArrayList<Tweet>();
 		 try {
@@ -148,7 +148,7 @@ public class ManageTweets {
 	
 	/*Get tweets from users followed*/
 	public List<Tweet> getUsersFollowedTweets(Integer id, Integer start, Integer end) {
-		 String query = "SELECT t.id, t.uid, t.postdatetime, t.content, u.name FROM tweets t LEFT JOIN follows f ON t.uid = f.fid  JOIN users u ON (t.uid = u.id) WHERE f.uid = ? ORDER BY t.postdatetime DESC LIMIT ?, ?;";
+		 String query = "SELECT t.id, t.uid, t.postdatetime, t.content, t.likes, u.name FROM tweets t LEFT JOIN follows f ON t.uid = f.fid  JOIN users u ON (t.uid = u.id) WHERE f.uid = ? ORDER BY t.postdatetime DESC LIMIT ?, ?;";
 		 PreparedStatement statement = null;
 		 List<Tweet> l = new ArrayList<Tweet>();
 		 try {

@@ -11,9 +11,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 <script type="text/javascript">
 $(document).ready(function(){
-	
+	$('#lcolumn').load('GetNotFollowedUsers');
+	$('#rcolumn').load('GetUserInfo');
 	$.ajaxSetup({ cache: false }); //Avoids Internet Explorer caching!	
 	$(document).on("click",".menu",function(event) {
 		$('#content').load($(this).attr('id'));
@@ -84,7 +86,7 @@ $(document).ready(function(){
 		</div>
 	</div>
 	<!-- Right Column -->
-	<div class="w3-container w3-col m3 w3-hide-small">
+	<div class="w3-container w3-col m3 w3-hide-small" style="float:right;">
 		<div id="lcolumn">
 			<p></p>
 		</div>

@@ -43,7 +43,7 @@ public class GetUsers extends HttpServlet {
 		if (session != null || user != null) {
 		
 			ManageUsers userManager = new ManageUsers();
-			users = userManager.getUsers(0,4);
+			users = userManager.getUsers(0,6);
 			userManager.finalize();
 		
 		}

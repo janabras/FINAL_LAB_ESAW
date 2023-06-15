@@ -9,7 +9,6 @@
 	$('#iterator').load('GetUserTweets');
  });
 </script>
-
 <div class="w3-container w3-card w3-round w3-white w3-section">
 	<h6 class="w3-opacity"> ${user.name}, what are you thinking? </h6>
 	<p id="tweetContent" contenteditable="true" class="w3-border w3-padding"> </p>

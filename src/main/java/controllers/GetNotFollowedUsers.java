@@ -34,7 +34,7 @@ public class GetNotFollowedUsers extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.println("notfollowd");
 		List<User> users = Collections.emptyList();
 		
 		HttpSession session = request.getSession(false);
@@ -43,7 +43,8 @@ public class GetNotFollowedUsers extends HttpServlet {
 		if (session != null || user != null) {
 		
 			ManageUsers userManager = new ManageUsers();
-			users = userManager.getNotFollowedUsers(user.getId(), user.getSport_interests(), 0, 4);
+			//users = userManager.getNotFollowedUsers(user.getId(), user.getSport_interests(), 0, 4);
+			users = userManager.getAllNotFollowedUsers(user.getId(), 0, 4);
 			userManager.finalize();
 		
 		}

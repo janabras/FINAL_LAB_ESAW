@@ -34,7 +34,7 @@ public class GetUserInfo extends HttpServlet {
 		// Get by username or by the actual user
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute("user");
-		if (session != null || user != null) {
+		if (session != null || session.getAttribute("user") != null) {
 			ManageUsers userManager = new ManageUsers();
 			user = userManager.getUser(user.getId());
 			userManager.finalize();

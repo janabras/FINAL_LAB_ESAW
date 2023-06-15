@@ -1,6 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="js/tweets.js"></script>
+<script>
+
+$('.likeTweet').click(function () {
+	//id tweet icon
+	var id_tweet = $(this).parent().attr("id");
+	var likes = $("#likes_" + id_tweet).text();
+	if($("#button_" + id_tweet).hasClass('w3-light-grey')){
+		$("#button_" + id_tweet).removeClass('w3-light-grey').addClass('w3-theme');
+		$("#button_" + id_tweet).removeClass('w3-hover-red').addClass('w3-hover-light-grey');
+		$("#likes_" + id_tweet).text(parseInt(likes) + 1);
+		
+	}
+	else {
+		$("#button_" + id_tweet).removeClass('w3-theme').addClass('w3-light-grey');
+		$("#button_" + id_tweet).removeClass('w3-hover-light-grey').addClass('w3-hover-red');
+		$("#likes_" + id_tweet).text(parseInt(likes) - 1);
+	}
+
+	
+});
+</script>
 
 <c:forEach var="t" items="${tweets}"> 
  <div id="${t.id}" class="w3-container w3-card w3-section w3-white w3-round w3-animate-opacity"><br>
@@ -10,7 +30,7 @@
    <hr class="w3-clear">
    <p> ${t.content} </p>
    <c:if test="${user != null}">
-   	<button type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button>
+   	<button id="button_${t.id}" type="button" class="likeTweet w3-button w3-light-grey w3-hover-red w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button> <span id="likes_${t.id}">${t.likes}</span>
    </c:if>
    <c:if test="${user == null}">
    	<button disabled type="button" class="likeTweet w3-button w3-theme w3-margin-bottom"><i class="fa fa-heart"></i> &nbsp;Like</button>
