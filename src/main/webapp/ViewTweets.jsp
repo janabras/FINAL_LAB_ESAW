@@ -1,40 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script>
-
-	$('.likeTweet').click(function () {
-	//tweet likes
-	var id_tweet = $(this).parent().attr("id");
-	var likes = $("#likes_" + id_tweet).text();
-	if($("#button_" + id_tweet).hasClass('w3-light-grey')){
-		$("#button_" + id_tweet).removeClass('w3-light-grey w3-hover-red').addClass('w3-theme w3-hover-light-grey');
-		$("#likes_" + id_tweet).text(parseInt(likes) + 1);
-	} else {
-		$("#button_" + id_tweet).removeClass('w3-theme w3-hover-light-grey').addClass('w3-light-grey w3-hover-red');
-		$("#likes_" + id_tweet).text(parseInt(likes) - 1);
-	}
-	});
-	
-	$('.editTweet').click(function () {
-		//tweet edit, front change icons, add class for index handling and change content to input/text
-		var id_tweet = $(this).parent().attr("id");
-		if($("#edit_" + id_tweet).hasClass('fa-pencil')){
-			$(this).html("<i id='edit_"+id_tweet+"' class='fa fa-check'></i> &nbsp;Save");
-			$(this).removeClass("saveEditTweet");
-			//Change p text to input
-			var contentText = $("#content_"+id_tweet).text();
-			$("#content_div_"+id_tweet).empty().append('<p id="content_' + id_tweet + '" contenteditable="true" class="w3-border w3-margin-bottom">' + contentText + '</p>')
-		
-		} else {
-			$(this).html("<i id='edit_"+id_tweet+"' class='fa fa-pencil'></i> &nbsp;Edit");
-			//Change input to p text
-			$(this).addClass("saveEditTweet");
-			var contentText = $("#content_"+id_tweet).text();
-			$("#content_div_"+id_tweet).empty().append('<p id="content_' + id_tweet + '" class="w3-margin-bottom">' + contentText + '</p>')
-		}
-		
-	});
-</script>
+<script src="js/tweets.js"></script>
 <c:if test="${isHome != null}">
 	<h2 class="w3-border w3-round-xlarge w3-center w3-border-red">Sports Twitter</h2>
 </c:if>

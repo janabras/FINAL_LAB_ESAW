@@ -16,6 +16,7 @@
 $(document).ready(function(){
 	// $('#lcolumn').load('GetNotFollowedUsers');
 	// $('#rcolumn').load('GetUserInfo');
+	
 	$.ajaxSetup({ cache: false }); //Avoids Internet Explorer caching!	
 	$(document).on("click",".menu",function(event) {
 		$('#content').load($(this).attr('id'));
@@ -35,6 +36,7 @@ $(document).ready(function(){
 	/* Delete tweet */
 	$(document).on("click",".delTweet",function(event){
 		var tweet = $(this).parent();
+		console.log($(this).parent().attr("id"))
 		$.post( "DelTweet", { id: $(this).parent().attr("id") } , function(event) {
 			$("#content").load("GetOwnTimeline");				
 		});
