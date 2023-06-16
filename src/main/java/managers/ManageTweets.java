@@ -3,6 +3,7 @@ package managers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import utils.DB;
 public class ManageTweets {
 	
 	private DB db = null ;
-	
+	 
 	public ManageTweets() {
 		try {
 			db = new DB();
@@ -44,6 +45,21 @@ public class ManageTweets {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	/* Edit a tweet */
+	public void editTweet(Tweet tweet) {
+		String query = "UPDATE tweets SET content = ?, postdatetime = ? WHERE id = ?";
+        try {
+            PreparedStatement statement = db.prepareStatement(query);
+            statement.setString(1, tweet.getContent());
+            statement.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            statement.setInt(3, tweet.getId());
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		
 	}
 	/* check if likes tweet */
 	public Boolean isLikedTweet(Integer id, Integer tid) {
@@ -98,7 +114,6 @@ public class ManageTweets {
 	            }
 	            statement_likes.close();
 				if (val > 0) { //user likes the tweet (delete likes)
-					System.out.println("Le gusta id"+id+ "tid"+tid);
 					statement_delete = db.prepareStatement(query_delete);
 					statement_delete.setInt(1, id);
 					statement_delete.setInt(2, tid);
@@ -106,7 +121,6 @@ public class ManageTweets {
 					statement_delete.executeUpdate();
 					statement_delete.close();
 				} else {
-					System.out.println("No le gusta id"+id+ "tid"+tid);
 					statement_insert = db.prepareStatement(query_insert);
 					statement_insert.setInt(1, id);
 					statement_insert.setInt(2, tid);
@@ -258,4 +272,5 @@ public class ManageTweets {
 		} 
 		return  l;
 	}
+	
 }
