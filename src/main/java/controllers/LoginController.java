@@ -54,6 +54,7 @@ public class LoginController extends HttpServlet {
 	    		if (pair.getLeft()) {
 		    		System.out.println("login OK, forwarding to ViewOwnTimeline ");
 	    			HttpSession session = request.getSession();
+	    			user.setAdmin(manager.isAdmin(user));
 	    			session.setAttribute("user",pair.getRight());
 	    			view = "ViewOwnTimeline.jsp";
 	    			

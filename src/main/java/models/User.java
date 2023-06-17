@@ -23,7 +23,7 @@ public class User implements java.io.Serializable {
 	private Date dob;
 	private String[] sport_interests;
 	private String biography;
-	private Boolean isAdmin;
+	private Boolean isAdmin = false;
 	private String picture = "";
 	
 	public Date getDob() {
@@ -179,7 +179,7 @@ public class User implements java.io.Serializable {
 		this.error.put(name, error);
 	}
 	
-	public boolean isAdmin() {
+	public boolean getIsAdmin() {
         return isAdmin;
     }
 	

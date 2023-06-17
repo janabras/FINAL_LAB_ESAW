@@ -32,7 +32,7 @@
    </c:if>--%>
    
    
-   <c:if test="${user != null && user.equals(t.uname)}">
+   <c:if test="${user != null && user.equals(t.uname) || user.isAdmin}">
    	<button type="button" class="delTweet w3-button w3-red w3-margin-bottom"><i class="fa fa-trash"></i> &nbsp;Delete</button> 
    	<button type="button" class="editTweet w3-button w3-red w3-margin-bottom"><i id="edit_${t.id}" class="fa fa-pencil"></i> &nbsp;Edit</button> 
    </c:if>

@@ -2,6 +2,7 @@ package controllers;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,7 +52,7 @@ public class MainController extends HttpServlet {
 			request.setAttribute("menu","ViewMenuNotLogged.jsp");
 			request.setAttribute("content","ViewTweets.jsp");
 		}
-		// Request to get the edit
+		// Request to get the edit/view profile
 		else if(request.getParameter("uname")!=null) {
 			String uname = request.getParameter("uname");
 			ManageUsers userManager = new ManageUsers();
@@ -59,14 +60,21 @@ public class MainController extends HttpServlet {
 			User user = userManager.getUser(uname);
 			if(Objects.isNull(user.getId())) user.setId(-1); // Identify that it's not the owner
 			userManager.finalize();
-			request.setAttribute("user", user);
+			
 			// Load templates
-			if(Objects.nonNull(user.getName())) {
-				request.setAttribute("menu","ViewMenuLogged.jsp");
+			//if(Objects.nonNull(user.getName())) {
+			if (session==null || session.getAttribute("user")==null) {
+				user.setId(-1);
+				request.setAttribute("menu","ViewMenuNotLogged.jsp");
+				//request.setAttribute("menu","ViewMenuLogged.jsp");
 			}
 			else {
-				request.setAttribute("menu","ViewMenuNotLogged.jsp");
+				User mainUser = (User) session.getAttribute("user");
+				if(!mainUser.getName().equals(uname) && !mainUser.getIsAdmin()) user.setId(-1);
+				request.setAttribute("menu","ViewMenuLogged.jsp");
+				//request.setAttribute("menu","ViewMenuNotLogged.jsp");
 			}
+			request.setAttribute("user", user);
 			request.setAttribute("content","ViewUserInfo.jsp");
 		}
 		// Registered and go home

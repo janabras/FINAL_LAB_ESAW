@@ -20,7 +20,7 @@ public class DeleteTweetController extends HttpServlet {
         HttpSession session = request.getSession(false);
         User adminUser = (User) session.getAttribute("user");
         
-        if (adminUser != null && adminUser.isAdmin()) {
+        if (adminUser != null && adminUser.getIsAdmin()) {
             int tweetId = Integer.parseInt(request.getParameter("tid"));
             int userId = Integer.parseInt(request.getParameter("uid"));
             

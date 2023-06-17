@@ -101,10 +101,30 @@ public class ManageUsers {
 			e.printStackTrace();
 		}
 	}
-	
+	//Check if user its admin
+	public Boolean isAdmin(User u) {
+		String query = "SELECT isAdmin FROM twitter_sports.users WHERE id=?;";
+		Boolean returnVal = false;
+		PreparedStatement statement = null;
+		ResultSet rs = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setInt(1, u.getId());
+			rs = statement.executeQuery();
+			if (rs.next()) {
+				returnVal = (rs.getInt("isAdmin") == 1);
+			}
+			rs.close();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return returnVal;
+	}
 	// Add new user
 	public void addUser(User user) {
-		String query = "INSERT INTO users (name, mail, pwd, dob, sport_interests) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO users (name, mail, pwd, dob, sport_interests, isAdmin) VALUES (?, ?, ?, ?, ?, ?)";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
@@ -113,6 +133,7 @@ public class ManageUsers {
 			statement.setString(3, user.getPwd());
 			statement.setDate(4,(java.sql.Date) user.getDob());
 			statement.setString(5, Arrays.toString(user.getSport_interests()));
+			statement.setInt(6, 0);
 			// statement.setBoolean(4, user.isAdmin());
 			statement.executeUpdate();
 			statement.close();

@@ -20,7 +20,7 @@ public class AdminController extends HttpServlet {
         HttpSession session = request.getSession(false);
         User adminUser = (User) session.getAttribute("user");
         
-        if (adminUser != null && adminUser.isAdmin()) {
+        if (adminUser != null && adminUser.getIsAdmin()) {
             int userId = Integer.parseInt(request.getParameter("uid"));
             
             ManageUsers userManager = new ManageUsers();
