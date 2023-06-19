@@ -37,7 +37,7 @@ public class ManageUsers {
 	
 	/* Get a user given its PK*/
 	public User getUser(Integer id) {
-		String query = "SELECT id,name,mail FROM users WHERE id = ? ;";
+		String query = "SELECT id,name,mail,sport_interests FROM users WHERE id = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
@@ -49,6 +49,7 @@ public class ManageUsers {
 				user = new User();
 				user.setId(rs.getInt("id"));
 				user.setNameAndEmail(rs.getString("name"), rs.getString("mail"));
+				user.setSport_interests(rs.getString("sport_interests").substring(1, rs.getString("sport_interests").length() - 1).split("\\."));
 				// user.setAdmin(rs.getBoolean("isAdmin"));
 			}
 			rs.close();
@@ -61,7 +62,7 @@ public class ManageUsers {
 	}
 	/* Get a user given its Username*/
 	public User getUser(String uname) {
-		String query = "SELECT id,name,mail FROM users WHERE name = ? ;";
+		String query = "SELECT id,name,mail,sport_interests FROM users WHERE name = ? ;";
 		PreparedStatement statement = null;
 		ResultSet rs = null;
 		User user = null;
@@ -73,6 +74,7 @@ public class ManageUsers {
 				user = new User();
 				user.setId(rs.getInt("id"));
 				user.setNameAndEmail(rs.getString("name"), rs.getString("mail"));
+				user.setSport_interests(rs.getString("sport_interests").substring(1, rs.getString("sport_interests").length() - 1).split("\\."));
 				// user.setAdmin(rs.getBoolean("isAdmin"));
 			}
 			rs.close();
@@ -250,7 +252,7 @@ public class ManageUsers {
 		return  l;
 	}
 	public List<User> getAllNotFollowedUsers(Integer id, Integer start, Integer end) {
-		 String query = "SELECT id, name FROM users WHERE id NOT IN (SELECT id FROM users,follows WHERE id = fid AND uid = ?) AND id != ? ORDER BY name LIMIT ?,?;";
+		 String query = "SELECT id, name, sport_interests FROM users WHERE id NOT IN (SELECT id FROM users,follows WHERE id = fid AND uid = ?) AND id != ? ORDER BY name LIMIT ?,?;";
 		 PreparedStatement statement = null;
 		 List<User> l = new ArrayList<User>();
 		 try {
@@ -264,6 +266,7 @@ public class ManageUsers {
 				 User user = new User();
 				 user.setId(rs.getInt("id"));
 				 user.setName(rs.getString("name"));
+				 user.setSport_interests(rs.getString("sport_interests").substring(1, rs.getString("sport_interests").length() - 1).split("\\."));
 				 l.add(user);
 			 }
 			 rs.close();

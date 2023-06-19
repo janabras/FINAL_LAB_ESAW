@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import managers.ManageEvents;
 import managers.ManageUsers;
+import models.Event;
 import models.User;
 
 /**
@@ -37,20 +39,27 @@ public class GetOwnLeftTimeline extends HttpServlet {
 		
 		System.out.println("notfollowd");
 		List<User> users = Collections.emptyList();
+		List<Event> events = Collections.emptyList();
 		
 		HttpSession session = request.getSession(false);
 		User user = (User) session.getAttribute("user");
 
 		if (session != null || user != null) {
-		
+			
 			ManageUsers userManager = new ManageUsers();
 			//users = userManager.getNotFollowedUsers(user.getId(), user.getSport_interests(), 0, 4);
 			users = userManager.getAllNotFollowedUsers(user.getId(), 0, 4);
+			user = userManager.getUser(user.getId());
 			userManager.finalize();
+			ManageEvents eventManger = new ManageEvents();
+			
+			events = eventManger.getEvents(user);
+			eventManger.finalize();
 		
 		}
 
 		request.setAttribute("users",users);
+		request.setAttribute("events",events);
 		request.setAttribute("zone","OwnTimeline");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewNotFollowedUsers.jsp"); 
 		dispatcher.forward(request,response);
