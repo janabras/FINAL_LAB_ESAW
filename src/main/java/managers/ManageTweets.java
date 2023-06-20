@@ -142,13 +142,12 @@ public class ManageTweets {
     }
 	
 	/* Delete existing tweet */
-	public void deleteTweet(Integer id,Integer uid) {
-		String query = "DELETE FROM tweets WHERE id = ? AND uid=?";
+	public void deleteTweet(Integer id) {
+		String query = "DELETE FROM tweets WHERE id = ?";
 		PreparedStatement statement = null;
 		try {
 			statement = db.prepareStatement(query);
 			statement.setInt(1,id);
-			statement.setInt(2,uid);
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLException e) {

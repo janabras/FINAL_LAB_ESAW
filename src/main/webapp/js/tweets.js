@@ -12,7 +12,12 @@ $(document).ready(function() {
 
 		return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.0`;
 	}
-
+	
+	$('.delTweet').click(function(){
+		var id_tweet = $(this).parent().attr("id");
+		$('#'+id_tweet).remove();
+	});
+	
 	$('.likeTweet').click(function() {
 		//tweet likes
 		var id_tweet = $(this).parent().attr("id");

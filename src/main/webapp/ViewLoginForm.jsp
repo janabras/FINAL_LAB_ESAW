@@ -13,7 +13,7 @@
 </c:if>
 
 
-<form action="LoginController" method="POST">
+<form action="LoginController" class="form" method="POST">
 	<p>      
     <label for="user" class="w3-text-theme"> User name </label><br>
     <input class="w3-input w3-border w3-light-grey" type="text" name="name" placeholder="Username" value="${user.name}" required autocomplete="username"><br>

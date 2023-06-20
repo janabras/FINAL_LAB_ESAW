@@ -25,7 +25,7 @@ public class DeleteTweetController extends HttpServlet {
             int userId = Integer.parseInt(request.getParameter("uid"));
             
             ManageTweets tweetManager = new ManageTweets();
-            tweetManager.deleteTweet(tweetId, userId); 
+            tweetManager.deleteTweet(tweetId); 
             
             response.sendRedirect("AdminPanel.jsp"); 
         } else {

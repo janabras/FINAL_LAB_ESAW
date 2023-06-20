@@ -22,7 +22,17 @@ $(document).ready(function(){
 		$('#content').load($(this).attr('id'));
 		event.preventDefault();
 	});
-	$(document).on("submit","form", function(event) {
+	
+	$(document).on("submit","#editOther", function(event) {
+		$('#content').load("EditOtherProfile", {id: $('#id').prop("content"), name: $('#name').val(), mail: $('#mail').val()});
+		event.preventDefault();
+	});
+	
+	
+	
+	
+	
+	$(document).on("submit",".form", function(event) {
 		$('#content').load($(this).attr('action'),$(this).serialize());
 	    event.preventDefault();
 	});
@@ -38,7 +48,7 @@ $(document).ready(function(){
 		var tweet = $(this).parent();
 		console.log($(this).parent().attr("id"))
 		$.post( "DelTweet", { id: $(this).parent().attr("id") } , function(event) {
-			$("#content").load("GetOwnTimeline");				
+			//$("#content").load("GetOwnTimeline");				
 		});
 		event.preventDefault();
 	});
@@ -76,6 +86,16 @@ $(document).ready(function(){
 		event.preventDefault();
     });
     
+    $(document).on("click", ".profile", function (event) {
+    	
+    	$('#content').load("AccessProfile", {name: $(this).text()});
+        event.preventDefault();
+    });
+    
+	$(document).on("click", ".userInfo", function (event) {
+    	$('#content').load("AccessProfile", {name: $(this).attr("id")});
+        event.preventDefault();
+    });
 });
 </script>
 </head>

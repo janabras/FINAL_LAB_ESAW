@@ -53,6 +53,8 @@ public class MainController extends HttpServlet {
 			request.setAttribute("content","ViewTweets.jsp");
 		}
 		// Request to get the edit/view profile
+		
+		/*
 		else if(request.getParameter("uname")!=null) {
 			String uname = request.getParameter("uname");
 			ManageUsers userManager = new ManageUsers();
@@ -77,6 +79,8 @@ public class MainController extends HttpServlet {
 			request.setAttribute("user", user);
 			request.setAttribute("content","ViewUserInfo.jsp");
 		}
+		*/
+		
 		// Registered and go home
 		else {
 			// Load all tweets

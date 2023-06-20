@@ -29,7 +29,7 @@
 </div>
 </c:if>
 
-<form action="RegisterController" id="regform" method="POST">
+<form class="form" action="RegisterController" id="regform" method="POST">
   <p>
   <label for="user" class="w3-text-theme"> User name:</label><br>
   <input class="w3-input w3-border w3-light-grey" type="text" id="name" name="name" placeholder="Username" value="${user.name}" required autocomplete="username"><br>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<script src="js/tweets.js"></script>
+<script src="js/tweets.js?2"></script>
 <c:if test="${isHome != null}">
 	<h2 class="w3-border w3-round-xlarge w3-center w3-border-red">Sports Twitter</h2>
 </c:if>
@@ -8,7 +8,7 @@
  <div id="${t.id}" class="w3-container w3-card w3-section w3-white w3-round w3-animate-opacity"><br>
    <img src="imgs/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
    <span id="date_${t.id}" class="w3-right w3-opacity"> ${t.postDateTime} </span>
-   <h4> <a class="menu w3-bar-item w3-button" href="?uname=${t.uname}">${t.uname}</a></h4><br>
+   <h4> <a class="profile w3-bar-item w3-button" href=#>${t.uname}</a></h4><br>
    <div id="content_div_${t.id}">
    <p id="content_${t.id}" class="w3-margin-bottom">${t.content}</p>
    </div>
