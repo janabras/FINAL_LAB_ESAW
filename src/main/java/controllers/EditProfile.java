@@ -3,8 +3,10 @@ package controllers;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import javax.servlet.RequestDispatcher;
@@ -22,12 +24,14 @@ import java.io.FileOutputStream;
 
 import managers.ManageUsers;
 import models.User;
-
+import java.nio.file.Path;
 /**
  * Servlet implementation class AddTweetFromUser
  */
 @WebServlet("/EditProfile")
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold=1024*1024*2, 
+maxFileSize=1024*1024*10, 
+maxRequestSize=1024*1024*50)
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -51,30 +55,31 @@ public class EditProfile extends HttpServlet {
             try {
                 BeanUtils.populate(user, request.getParameterMap());
                 
-                
-                
                 /*
-                System.out.println("1get");
+                
+               System.out.println("Guardando img");
                 Part filePart = request.getPart("picture");
-                System.out.println("2get");
 
-                if (filePart != null && filePart.getSize() > 0) {
-                	InputStream fileContent = filePart.getInputStream();
-                    System.out.println("3");
+                // Obtener el flujo de entrada de la parte del archivo
+                InputStream fileContent = filePart.getInputStream();
 
-                	String fileName = "avatar_" + user.getName() + ".png";
-                    String pathAvatars = "imgs/avatars";
-                    File outputFile = new File(pathAvatars, fileName);
-                    
-                    try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(outputFile))) {
-                        byte[] buffer = new byte[8192];
-                        int bytesRead;
-                        while ((bytesRead = fileContent.read(buffer)) != -1) {
-                            outputStream.write(buffer, 0, bytesRead);
-                        }
-                    }
-                    
+                // Crear una ruta y un nombre de archivo para guardar la imagen
+                String fileName = "imagen.jpg";
+                String filePath = "imgs/" + fileName;
+
+                // Crear el flujo de salida hacia el archivo
+                OutputStream outputStream = Files.newOutputStream(Paths.get(filePath));
+
+                // Leer los datos del flujo de entrada y escribirlos en el flujo de salida
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+                while ((bytesRead = fileContent.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
                 }
+
+                // Cerrar los flujos de entrada y salida
+                fileContent.close();
+                outputStream.close();
                 
                 
                 // Get image
@@ -116,8 +121,24 @@ public class EditProfile extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        System.out.println("1post");
+        /*Part filePart = request.getPart("picture");
+        System.out.println("Guardando img");
 
+        InputStream fileContent = filePart.getInputStream();
+
+        String fileName = "imagen.jpg";
+        String filePath = "imgs/" + fileName;
+
+        OutputStream outputStream = Files.newOutputStream(Paths.get(filePath));
+
+        byte[] buffer = new byte[8192];
+        int bytesRead;
+        while ((bytesRead = fileContent.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, bytesRead);
+        }
+
+        fileContent.close();
+        outputStream.close();*/
 		doGet(request, response);
 	}
 

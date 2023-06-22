@@ -7,7 +7,7 @@
   <h4>Edit your profile</h4>
   <p><img src="${user.picture}" id="avatarImage" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
   <hr>
-  <form class="form" action="EditProfile" method="post" enctype="multipart/form-data">
+  <form class="form2" action="EditProfile" method="post" enctype="multipart/form-data">
     <p class="w3-left-align">
       <i class="fa fa-user fa-fw w3-margin-right"></i>
       <input type="text" name="name" value="${user.name}" required>

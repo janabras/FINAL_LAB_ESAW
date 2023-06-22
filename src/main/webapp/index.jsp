@@ -28,6 +28,23 @@ $(document).ready(function(){
 		event.preventDefault();
 	});
 	
+	$(document).on("submit",".form2", function(event) {
+		var form = this;
+		var data = new FormData(form);
+		$.ajax({
+			type: 'POST',
+			enctype: 'multipart/form-data',
+			url: $(form).attr('action'),
+			data: data,
+			processData: false,
+			contentType: false
+		}).done(function(html){
+			$("#content").html(html);
+		});
+		event.preventDefault();
+	});
+	
+	
 	$(document).on("submit",".form", function(event) {
 		$('#content').load($(this).attr('action'),$(this).serialize());
 	    event.preventDefault();

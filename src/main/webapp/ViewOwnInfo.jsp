@@ -17,7 +17,7 @@
 	</p>
 
 	<a id="UserController" type="button"
-		class="editUser w3-row w3-button w3-green w3-section" href=""> <i
+		class="w3-row w3-button w3-green w3-section" href=""> <i
 		class="fa fa-cog"></i> &nbsp;Edit
 	</a>
 </div>
