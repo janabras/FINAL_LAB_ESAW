@@ -3,6 +3,9 @@ package controllers;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
@@ -48,7 +51,15 @@ public class AccessProfile extends HttpServlet {
 			BeanUtils.populate(userAccesed, request.getParameterMap());
 			userAccesed = userManager.getUser(userAccesed.getName());
 			if (session==null || session.getAttribute("user")==null) {
-
+				//Get tweets
+				List<Tweet> tweets = Collections.emptyList();
+				
+				ManageTweets tweetManager = new ManageTweets();
+				tweets = tweetManager.getUserTweets(userAccesed.getId(),0,4);
+				
+				tweetManager.finalize();
+				
+				request.setAttribute("tweets",tweets);
 					
 			}
 			else {
@@ -56,6 +67,23 @@ public class AccessProfile extends HttpServlet {
 				if (user.getIsAdmin() || user.getId() == userAccesed.getId()) {
 					request.setAttribute("access", true);
 				}
+				request.setAttribute("user", user);
+				
+				//Get tweets
+				List<Tweet> tweets = Collections.emptyList();
+				
+				ManageTweets tweetManager = new ManageTweets();
+				tweets = tweetManager.getUserTweets(userAccesed.getId(),0,4);
+					
+		        for (Iterator<Tweet> iterator = tweets.iterator(); iterator.hasNext();) {
+		            Tweet next = iterator.next();
+		            next.setLiked(tweetManager.isLikedTweet(user.getId(), next.getId()));
+		        }
+		          
+				tweetManager.finalize();
+				
+				request.setAttribute("tweets",tweets);
+				
 			}
 				
 				

@@ -41,7 +41,7 @@ public class UserEditAdmin extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		User userAccesed = new User();
 		ManageUsers userManager = new ManageUsers();
-
+		
 		try {
 			BeanUtils.populate(userAccesed, request.getParameterMap());
 			userAccesed = userManager.getUser(userAccesed.getName());
@@ -51,7 +51,7 @@ public class UserEditAdmin extends HttpServlet {
 		}
 		
 		request.setAttribute("userAccesed", userAccesed);
-		//request.setAttribute("user", user);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("EditOtherUserInfo.jsp");
 		dispatcher.forward(request, response);	
 		

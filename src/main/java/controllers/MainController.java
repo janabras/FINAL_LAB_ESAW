@@ -91,7 +91,6 @@ public class MainController extends HttpServlet {
 			tweetManager.finalize();
 			request.setAttribute("tweets",tweets);
 			request.setAttribute("user", user);
-			System.out.println("Main Controller: active session has been found.");
 			request.setAttribute("menu","ViewMenuLogged.jsp");
 			request.setAttribute("content","ViewTweets.jsp");
 			request.setAttribute("isHome","true");

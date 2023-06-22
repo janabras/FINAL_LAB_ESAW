@@ -139,7 +139,6 @@ $(document).ready(function(){
   		</div>
 	</div>
 	
-	
 	<!-- Right Column -->
 	<div class="w3-container w3-col m3 w3-hide-small" style="float:right;">
 		<div id="lcolumn">

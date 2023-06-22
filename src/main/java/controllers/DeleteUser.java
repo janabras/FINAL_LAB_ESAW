@@ -13,21 +13,21 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-import managers.ManageTweets;
+import managers.ManageUsers;
 import models.Tweet;
 import models.User;
 
 /**
- * Servlet implementation class AddTweet
+ * Servlet implementation class DeleteUser
  */
-@WebServlet("/AddTweet")
-public class AddTweet extends HttpServlet {
+@WebServlet("/DeleteUser")
+public class DeleteUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddTweet() {
+    public DeleteUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,20 +37,15 @@ public class AddTweet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Tweet tweet = new Tweet();
-		ManageTweets tweetManager = new ManageTweets();
+		ManageUsers usersManager = new ManageUsers();
 		HttpSession session = request.getSession(false);
-		User user = (User) session.getAttribute("user");
-		
+		//User user = (User) session.getAttribute("user");
+		User userAccesed = new User();
 		try {
-			
-			if (session != null || user != null)
-				BeanUtils.populate(tweet, request.getParameterMap());
-				tweet.setUid(user.getId());
-				tweet.setUname(user.getName());
-				tweet.setPostDateTime(new Timestamp(System.currentTimeMillis()));
-				tweetManager.addTweet(tweet);
-				tweetManager.finalize();
+			BeanUtils.populate(userAccesed, request.getParameterMap());
+			System.out.println(userAccesed.getId());
+			//usersManager.getUser(userAccesed.getName());
+			usersManager.DeleteUserAccount(userAccesed.getId());
 
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			// TODO Auto-generated catch block
