@@ -1,12 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" session="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="true"%>
 
- <script type="text/javascript">
- $(document).ready(function(){
-	$('#navigation').load('MenuController');
-	$('#lcolumn').html("<p></p>");
-	$('#rcolumn').html("<p></p>");
- });
+<style>
+#logout-message {
+    font-size: 24px; /* Increase font size */
+}
+</style>
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#navigation').load('MenuController');
+    $('#lcolumn').html("<p></p>");
+    $('#rcolumn').html("<p></p>");
+});
 </script>
 
-<p> Logout done! </p>
+<p id="logout-message">Logout done!</p>

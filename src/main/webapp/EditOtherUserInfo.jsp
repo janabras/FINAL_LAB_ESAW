@@ -13,11 +13,11 @@
   <hr>
   <form id="editOther" action="EditOtherProfile" method="post" enctype="multipart/form-data">
     <p class="w3-left-align">
-      <i class="fa fa-id-card fa-fw w3-margin-right"></i>
+      <i class="fa fa-user fa-fw w3-margin-right"></i>
       <input id="name" type="text" name="name" value="${userAccesed.name}" required>
     </p>
     <p class="w3-left-align">
-      <i class="fa fa-id-badge fa-fw w3-margin-right"></i>
+      <i class="fa fa-envelope fa-fw w3-margin-right"></i>
       <input id="mail" type="email" name="mail" value="${userAccesed.mail}" required>
     </p>
     <p class="w3-left-align">

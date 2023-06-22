@@ -28,10 +28,6 @@ $(document).ready(function(){
 		event.preventDefault();
 	});
 	
-	
-	
-	
-	
 	$(document).on("submit",".form", function(event) {
 		$('#content').load($(this).attr('action'),$(this).serialize());
 	    event.preventDefault();
@@ -115,12 +111,18 @@ $(document).ready(function(){
 			<p></p>
 		</div>
 	</div>
-	<!-- Middle Column -->	
+	<!-- Middle Column -->
 	<div class="e3-container w3-col m6">
-		<div id="content">
-			<jsp:include page="${content}" />
-		</div>
+  		<div id="content" style="margin-top: 30px;">
+    		<h2 style="color: black; text-align: center; font-size: 62px; font-family: 'Your Custom Font', Verdana;">Sports Twitter</h2>
+    		<div style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+      			<img src="imgs/logo.png" alt="Sports Twitter Logo" style="width: 130px; height: 130px;margin-top: 30px; margin-bottom: 60px;">
+    		</div>
+    		<jsp:include page="${content}" />
+  		</div>
 	</div>
+	
+	
 	<!-- Right Column -->
 	<div class="w3-container w3-col m3 w3-hide-small" style="float:right;">
 		<div id="lcolumn">
@@ -130,9 +132,13 @@ $(document).ready(function(){
 	</div>
 	<!-- End Content -->
 	<!-- Footer -->
-	<footer class="w3-container w3-theme">
-	  <p> Universitat Pompeu Fabra </p>
+	<footer class="w3-container w3-black w3-padding-8">
+  		<p style="font-style: italic; text-align: center; font-size: 17px;">"If you don't take the shot... you'll never know whether it would have gone in or not"</p>
+  		<p style="font-style: italic; font-family: cursive; text-align: center; font-size: 15px;"> Mike Lupica</p>
 	</footer>
+	
+	
+	
 	
 	<script>
 		function stack() {

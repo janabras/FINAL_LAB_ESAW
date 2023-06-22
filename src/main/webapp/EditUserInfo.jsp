@@ -9,11 +9,11 @@
   <hr>
   <form class="form" action="EditProfile" method="post" enctype="multipart/form-data">
     <p class="w3-left-align">
-      <i class="fa fa-id-card fa-fw w3-margin-right"></i>
+      <i class="fa fa-user fa-fw w3-margin-right"></i>
       <input type="text" name="name" value="${user.name}" required>
     </p>
     <p class="w3-left-align">
-      <i class="fa fa-id-badge fa-fw w3-margin-right"></i>
+      <i class="fa fa-envelope fa-fw w3-margin-right"></i>
       <input type="email" name="mail" value="${user.mail}" required>
     </p>
     <p class="w3-left-align">
