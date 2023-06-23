@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="icon" href="imgs/upf.jpg">
+<link rel="icon" href="imgs/logo.png">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title> Lab 4 template </title>
+<title>Sports Twitter </title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
