@@ -52,11 +52,11 @@ public class LoginController extends HttpServlet {
 	    		pair = manager.checkLogin(user);
 	    		
 	    		if (pair.getLeft()) {
-		    		System.out.println("login OK, forwarding to ViewOwnTimeline ");
+		    		System.out.println("login OK, forwarding to ViewHome ");
 	    			HttpSession session = request.getSession();
 	    			user.setAdmin(manager.isAdmin(user));
 	    			session.setAttribute("user",pair.getRight());
-	    			view = "ViewOwnTimeline.jsp";
+	    			view = "ViewHome.jsp";
 	    			
 	    		}
 	    		else {

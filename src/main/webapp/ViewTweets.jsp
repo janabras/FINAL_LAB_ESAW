@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="js/tweets.js?2"></script>
-<c:if test="${isHome != null}">
-	<h2 class="w3-border w3-round-xlarge w3-center w3-border-red">Sports Twitter</h2>
-</c:if>
 <c:forEach var="t" items="${tweets}"> 
  <div id="${t.id}" class="w3-container w3-card w3-section w3-white w3-round w3-animate-opacity"><br>
    <img src="imgs/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
@@ -39,9 +36,3 @@
    <div class="w3-right w3-badge w3-red w3-margin-top"><i class="fa fa-thumbs-up"></i><a id="likes_${t.id}">${t.likes}</a></div>
  </div>
 </c:forEach>
-<c:if test="${isHome != null}">
-	<div class="w3-container w3-leftbar w3-sand w3-margin-bottom">
-	  <p><i>"If you don't take a shot... you'll never know whether it would have gone in or not"</i></p>
-	  <h4>~ Mike Lupica</h4>
-	</div>
-</c:if>
