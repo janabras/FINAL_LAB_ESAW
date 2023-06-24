@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import managers.ManageUsers;
+import managers.ManageComments;
 import managers.ManageTweets;
+import models.Comment;
 import models.Tweet;
 import models.User;
 
@@ -54,6 +56,17 @@ public class GetUserTweets extends HttpServlet {
 		}
 		request.setAttribute("tweets",tweets);
 		request.setAttribute("user", user);
+		
+		ManageComments commentManager = new ManageComments();
+		
+		List<Comment> comments = Collections.emptyList();
+		
+		comments = commentManager.getComments();
+		
+		commentManager.finalize();
+		
+		request.setAttribute("comments", comments);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewTweets.jsp"); 
 		dispatcher.forward(request,response);
 		

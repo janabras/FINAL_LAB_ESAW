@@ -13,12 +13,14 @@
 
 
 <script type="text/javascript">
+var actualPage = null;
 $(document).ready(function(){
 	// $('#lcolumn').load('GetNotFollowedUsers');
 	// $('#rcolumn').load('GetUserInfo');
 	
 	$.ajaxSetup({ cache: false }); //Avoids Internet Explorer caching!	
 	$(document).on("click",".menu",function(event) {
+		actualPage = $(this).attr('id');
 		$('#content').load($(this).attr('id'));
 		event.preventDefault();
 	});
@@ -56,12 +58,36 @@ $(document).ready(function(){
 		});
 		event.preventDefault();
 	});
+	/* Add Comment */
+	$(document).on("click",".addComment",function(event){
+		var tweet = $(this).parent();
+		
+		console.log(actualPage);
+		$.post( "AddComment", { 
+			content: $("#add_comment_" + tweet.attr("id")).val(),
+			tid: tweet.attr("id")
+			}, function(event) {
+
+			$("#content").load(actualPage);		
+		});
+		event.preventDefault();
+	});
+	/* Delete comment */
+	$(document).on("click",".delComment",function(event){
+		var comment = $(this).parent();
+		$.post( "DelComment", { id: $(this).parent().attr("class") } , function(event) {
+			$("#content").load(actualPage);		
+			alert("Comment deleted succesfully!");
+		});
+		event.preventDefault();
+	});
 	/* Delete tweet */
 	$(document).on("click",".delTweet",function(event){
 		var tweet = $(this).parent();
 		console.log($(this).parent().attr("id"))
 		$.post( "DelTweet", { id: $(this).parent().attr("id") } , function(event) {
-			//$("#content").load("GetOwnTimeline");				
+			$("#content").load(actualPage);			
+			alert("Tweet deleted succesfully!");
 		});
 		event.preventDefault();
 	});

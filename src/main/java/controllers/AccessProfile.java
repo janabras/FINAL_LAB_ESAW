@@ -18,7 +18,9 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.beanutils.BeanUtils;
 import managers.ManageUsers;
+import managers.ManageComments;
 import managers.ManageTweets;
+import models.Comment;
 import models.Tweet;
 import models.User;
 
@@ -55,11 +57,23 @@ public class AccessProfile extends HttpServlet {
 				List<Tweet> tweets = Collections.emptyList();
 				
 				ManageTweets tweetManager = new ManageTweets();
+				
 				tweets = tweetManager.getUserTweets(userAccesed.getId(),0,4);
+				
 				
 				tweetManager.finalize();
 				
 				request.setAttribute("tweets",tweets);
+				
+				ManageComments commentManager = new ManageComments();
+				
+				List<Comment> comments = Collections.emptyList();
+				
+				comments = commentManager.getComments();
+				
+				commentManager.finalize();
+				
+				request.setAttribute("comments", comments);
 					
 			}
 			else {
@@ -83,6 +97,16 @@ public class AccessProfile extends HttpServlet {
 				tweetManager.finalize();
 				
 				request.setAttribute("tweets",tweets);
+				
+				ManageComments commentManager = new ManageComments();
+				
+				List<Comment> comments = Collections.emptyList();
+				
+				comments = commentManager.getComments();
+				
+				commentManager.finalize();
+				
+				request.setAttribute("comments", comments);
 				
 			}
 				

@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import managers.ManageComments;
 import managers.ManageTweets;
 import managers.ManageUsers;
+import models.Comment;
 import models.Tweet;
 import models.User;
 
@@ -48,6 +50,17 @@ public class MainController extends HttpServlet {
 			tweets = tweetManager.getRecentTweets(0,10);
 			tweetManager.finalize();
 			request.setAttribute("tweets",tweets);
+
+			ManageComments commentManager = new ManageComments();
+			
+			List<Comment> comments = Collections.emptyList();
+			
+			comments = commentManager.getComments();
+			
+			commentManager.finalize();
+			
+			request.setAttribute("comments", comments);
+			
 			// Load templates
 			request.setAttribute("menu","ViewMenuNotLogged.jsp");
 			request.setAttribute("content","ViewTweets.jsp");
@@ -94,8 +107,16 @@ public class MainController extends HttpServlet {
 			request.setAttribute("menu","ViewMenuLogged.jsp");
 			request.setAttribute("content","ViewTweets.jsp");
 			request.setAttribute("isHome","true");
+			ManageComments commentManager = new ManageComments();
+			
+			List<Comment> comments = Collections.emptyList();
+			
+			comments = commentManager.getComments();
+			
+			commentManager.finalize();
+			
+			request.setAttribute("comments", comments);
 		}
-		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
 		response.setContentType("text/html");
 		dispatcher.forward(request, response);	}

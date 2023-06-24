@@ -28,21 +28,5 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/java/managers/ManageEvents.java</name>
-			<type>1</type>
-			<location>C:/Users/theto/OneDrive/Escritorio/universidad/web/FINAL_LAB_ESAW/src/main/java/managers/ManageEvents.java</location>
-		</link>
-		<link>
-			<name>src/main/java/models/Event.java</name>
-			<type>1</type>
-			<location>C:/Users/theto/OneDrive/Escritorio/universidad/web/FINAL_LAB_ESAW/src/main/java/models/Event.java</location>
-		</link>
-		<link>
-			<name>src/main/webapp/imgs/logo.png</name>
-			<type>1</type>
-			<location>C:/Users/theto/OneDrive/Escritorio/universidad/web/FINAL_LAB_ESAW/src/main/webapp/imgs/logo.png</location>
-		</link>
-	</linkedResources>
+	
 </projectDescription>
