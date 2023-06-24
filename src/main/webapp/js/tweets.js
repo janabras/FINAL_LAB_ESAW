@@ -31,6 +31,20 @@ $(document).ready(function() {
 		}
 	});
 
+$('.likeComment').click(function() {
+		//tweet likes
+		var id_comment = $(this).parent().attr("id");
+		var likes = $("#likesc_" + id_comment).text();
+		if ($("#button_comment_" + id_comment).hasClass('w3-light-grey')) {
+			$("#button_comment_" + id_comment).removeClass('w3-light-grey w3-hover-red').addClass('w3-red w3-hover-light-grey');
+			$("#likesc_" + id_comment).text(parseInt(likes) + 1);
+		} else {
+			$("#button_comment_" + id_comment).removeClass('w3-red w3-hover-light-grey').addClass('w3-light-grey w3-hover-red');
+			$("#likesc_" + id_comment).text(parseInt(likes) - 1);
+		}
+	});
+
+
 	$('.editTweet').click(function() {
 		//tweet edit, front change icons, add class for index handling and change content to input/text
 		var id_tweet = $(this).parent().attr("id");

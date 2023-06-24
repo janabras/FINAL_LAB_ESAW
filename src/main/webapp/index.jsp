@@ -115,7 +115,12 @@ $(document).ready(function(){
         $.post("AddTweetLike", {id: $(this).parent().attr("id")});
         event.preventDefault();
     });
-	
+    /* Add Like comment */
+    $(document).on("click", ".likeComment", function (event) {
+        var tweet = $(this).parent();
+        $.post("AddCommentLike", {id: $(this).parent().attr("id")});
+        event.preventDefault();
+    });
 	
     //Edit Tweet 
     $(document).on("click", ".saveEditTweet", function (event) {

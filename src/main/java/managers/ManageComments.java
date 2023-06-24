@@ -44,7 +44,7 @@ private DB db = null ;
 	}
 	public List<Comment> getComments(){
 		List<Comment> comments = new ArrayList<Comment>();
-		String query = "SELECT id,username,content,tid, postdatetime FROM comments ORDER BY postdatetime DESC;";
+		String query = "SELECT id,username,content,tid, postdatetime, likes FROM comments ORDER BY postdatetime DESC;";
 		PreparedStatement statement = null;
 		try {
 			 statement = db.prepareStatement(query);
@@ -56,6 +56,7 @@ private DB db = null ;
 				 c.setContent(rs.getString("content"));
 				 c.setTid(rs.getInt("tid"));
 				 c.setPostDateTime(rs.getTimestamp("postdatetime"));
+				 c.setLikes(rs.getInt("likes"));
 				 comments.add(c);
 			 }
 			 rs.close();
@@ -78,4 +79,87 @@ private DB db = null ;
 			e.printStackTrace();
 		}
 	}
+	
+	/* check if likes comment */
+	public Boolean isLikedComment(Integer id, Integer cid) {
+		String query = "SELECT COUNT(*) FROM likescomment WHERE cid = ? AND id = ?;";
+		PreparedStatement statement = null;
+		Boolean returnstate = false;
+		try {
+			statement = db.prepareStatement(query);
+            statement.setInt(1, cid);
+            statement.setInt(2, id);
+            ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				int val = rs.getInt("COUNT(*)");
+				if (val > 0) {
+					returnstate = true;
+				}
+			}
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return returnstate;
+	}
+	
+	
+	/* Like/UndoLike a comment */
+    public void addLikeComment(Integer id, Integer tid) {
+        String query = "SELECT COUNT(*) AS count FROM likescomment WHERE cid = ? AND id = ?;"; //Check if the user likes the comment
+        String query_likes = "SELECT likes FROM comments WHERE id = ?;"; //Gets number of likes
+        String query_update = "UPDATE comments SET likes=? WHERE id = ?;"; //Updates number of likes
+        String query_insert = "INSERT INTO likescomment (id, cid) VALUES (?,?)"; //Insert one like on table
+        String query_delete = "DELETE FROM likescomment WHERE id=? AND cid = ?"; //Deletes like
+        int n_likes = 0;
+        PreparedStatement statement = null;
+        PreparedStatement statement_likes = null;
+        PreparedStatement statement_update = null;
+        PreparedStatement statement_insert = null;
+        PreparedStatement statement_delete = null;
+        try {
+            statement = db.prepareStatement(query);
+            statement.setInt(1, tid);
+            statement.setInt(2, id);
+            ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				int val = rs.getInt("count");
+				statement_likes = db.prepareStatement(query_likes);
+				statement_likes.setInt(1, tid);
+				statement.close();
+	            ResultSet rs_likes = statement_likes.executeQuery();
+	            
+	            if (rs_likes.next()) {
+	            	n_likes = rs_likes.getInt("likes");
+	            	
+	            }
+	            statement_likes.close();
+				if (val > 0) { //user likes the tweet (delete likes)
+					statement_delete = db.prepareStatement(query_delete);
+					statement_delete.setInt(1, id);
+					statement_delete.setInt(2, tid);
+					n_likes = n_likes - 1;
+					statement_delete.executeUpdate();
+					statement_delete.close();
+				} else {
+					statement_insert = db.prepareStatement(query_insert);
+					statement_insert.setInt(1, id);
+					statement_insert.setInt(2, tid);
+					n_likes = n_likes + 1;
+		            statement_insert.executeUpdate();
+		            statement_insert.close();
+				}
+				statement_update = db.prepareStatement(query_update);
+				statement_update.setInt(1, n_likes);
+				statement_update.setInt(2, tid);
+				statement_update.executeUpdate();
+				statement_update.close();
+				
+				
+			}
+        } catch (SQLException e) {
+    			e.printStackTrace();
+      }
+    }
+	
 }

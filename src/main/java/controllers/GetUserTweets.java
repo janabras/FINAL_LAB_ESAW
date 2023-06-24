@@ -62,7 +62,10 @@ public class GetUserTweets extends HttpServlet {
 		List<Comment> comments = Collections.emptyList();
 		
 		comments = commentManager.getComments();
-		
+		for (Iterator<Comment> iterator = comments.iterator(); iterator.hasNext();) {
+			Comment next = iterator.next();
+            next.setLiked(commentManager.isLikedComment(user.getId(), next.getId()));
+        }
 		commentManager.finalize();
 		
 		request.setAttribute("comments", comments);
