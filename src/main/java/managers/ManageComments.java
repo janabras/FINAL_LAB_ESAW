@@ -44,7 +44,7 @@ private DB db = null ;
 	}
 	public List<Comment> getComments(){
 		List<Comment> comments = new ArrayList<Comment>();
-		String query = "SELECT id,username,content,tid, postdatetime FROM comments;";
+		String query = "SELECT id,username,content,tid, postdatetime FROM comments ORDER BY postdatetime DESC;";
 		PreparedStatement statement = null;
 		try {
 			 statement = db.prepareStatement(query);

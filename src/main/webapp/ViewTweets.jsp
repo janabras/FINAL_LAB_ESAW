@@ -52,26 +52,30 @@
 	<!-- Comment section -->
 	<h3>Comment section</h3>
 	<div class="w3-container comment-section w3-margin-bottom">
+	  <c:set var="commentCount" value="0" />
 	  <c:forEach var="c" items="${comments}">
-	  	<c:if test="${c.tid == t.id}">
-	    <div class="w3-card-4 w3-margin-bottom">
-			<header class="w3-container w3-light-grey">
-			  <h3 class="${c.id}">${c.username} ~ ${c.postDateTime}
-			  <c:if test="${user != null && user.name == c.username || user.isAdmin}">
-			     <button type="button" class="delComment w3-button w3-red w3-margin-bottom w3-right">
-			       <i id="delete_comment_${c.id}" class="fa fa-trash"></i> &nbsp;Delete
-			     </button> 
-			   </c:if>
-			   </h3>
-			</header>
-			<div class="w3-container">
-			  <p>${c.content}</p>
-			</div>
-		</div>
-		
-		</c:if>
+	    <c:if test="${c.tid == t.id}">
+	      <c:if test="${commentCount < 5}">
+	        <div class="w3-card-4 w3-margin-bottom">
+	          <header class="w3-container w3-light-grey">
+	            <h3 class="${c.id}">${c.username} ~ ${c.postDateTime}
+	              <c:if test="${user != null && (user.name == c.username || user.isAdmin)}">
+	                <button type="button" class="delComment w3-button w3-red w3-margin-bottom w3-right">
+	                  <i id="delete_comment_${c.id}" class="fa fa-trash"></i> &nbsp;Delete
+	                </button> 
+	              </c:if>
+	            </h3>
+	          </header>
+	          <div class="w3-container">
+	            <p>${c.content}</p>
+	          </div>
+	        </div>
+	        <c:set var="commentCount" value="${commentCount + 1}" />
+	      </c:if>
+	    </c:if>
 	  </c:forEach>
 	</div>
+
   
  </div>
 </c:forEach>
