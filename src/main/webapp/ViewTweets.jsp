@@ -58,7 +58,7 @@
 	      <c:if test="${commentCount < 5}">
 	        <div class="w3-card-4 w3-margin-bottom">
 	          <header class="w3-container w3-light-grey">
-	            <h3 class="${c.id}">${c.username} ~ ${c.postDateTime}
+	            <h3 class="${c.id}"><a class="profile w3-button">${c.username}</a> 
 	              <c:if test="${user != null && (user.name == c.username || user.isAdmin)}">
 	                <button type="button" class="delComment w3-button w3-red w3-margin-bottom w3-right">
 	                  <i id="delete_comment_${c.id}" class="fa fa-trash"></i> &nbsp;Delete
@@ -68,6 +68,8 @@
 	          </header>
 	          <div class="w3-container">
 	            <p>${c.content}</p>
+	            <hr>
+	            <p> ${c.postDateTime} </p>
 	          </div>
 	        </div>
 	        <c:set var="commentCount" value="${commentCount + 1}" />

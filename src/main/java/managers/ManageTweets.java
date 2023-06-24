@@ -215,7 +215,7 @@ public class ManageTweets {
 	
 	/* Get all tweets for Landing Page, most recent */
 	public List<Tweet> getLoggedTweets(Integer id, Integer start, Integer end) {
-		 String query = "SELECT t.id, t.uid, t.postdatetime, t.content, t.likes u.name FROM tweets t LEFT JOIN users u ON (t.uid = u.id) WHERE t.uid != ? ORDER BY t.postdatetime DESC LIMIT ?, ?;";
+		String query = "SELECT t.id, t.uid, t.postdatetime, t.content, t.likes, u.name FROM tweets t LEFT JOIN users u ON (t.uid = u.id) WHERE t.uid != ? ORDER BY t.postdatetime DESC LIMIT ?, ?;";
 		 PreparedStatement statement = null;
 		 List<Tweet> l = new ArrayList<Tweet>();
 		 try {
@@ -240,7 +240,7 @@ public class ManageTweets {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} 
-		return  l;
+		return l;
 	}
 	
 	/*Get tweets from users followed*/
