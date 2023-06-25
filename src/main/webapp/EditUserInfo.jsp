@@ -4,24 +4,6 @@
 <html>
 <body>
 
-<c:if test="${userAccesed.error['user']}">
-<div class="w3-panel w3-theme-l4 w3-display-container">
-  <span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-large w3-display-topright">&times;</span>
-  <h3> Registration error! </h3>
-  <p> Given user name already exists in our database or it's over 50 characters. </p>
-</div>
-</c:if>
-
-<c:if test="${userAccesed.error['mail']}">
-<div class="w3-panel w3-theme-l4 w3-display-container">
-  <span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-large w3-display-topright">&times;</span>
-  <h3> Registration error! </h3>
-  <p> Given mail already exists in our database. </p>
-</div>
-</c:if>
-
 
 <div class="w3-container w3-card w3-round w3-white w3-section w3-center">
   <h4>Edit your profile</h4>
@@ -30,7 +12,7 @@
   <form class="form2" action="EditProfile" method="post" enctype="multipart/form-data">
     <p class="w3-left-align">
       <i class="fa fa-user fa-fw w3-margin-right"></i>
-      <input type="text" name="name" value="${user.name}" required>
+      <input type="text" name="name" value="${user.name}" required pattern="^.{1,50}$">
     </p>
     <p class="w3-left-align">
       <i class="fa fa-envelope fa-fw w3-margin-right"></i>
