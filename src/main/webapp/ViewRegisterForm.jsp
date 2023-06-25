@@ -32,7 +32,7 @@
 <form class="form" action="RegisterController" id="regform" method="POST">
   <p>
   <label for="user" class="w3-text-black"><b>User name:</b></label><br>
-  <input class="w3-input w3-border w3-light-grey" type="text" id="name" name="name" placeholder="Username" value="${user.name}" required autocomplete="username"><br>
+  <input class="w3-input w3-border w3-light-grey" type="text" id="name" name="name" placeholder="Username" value="${user.name}" required autocomplete="username" pattern="^.{1,50}$" ><br>
   <label for="mail" class="w3-text-black"><b>Mail:</b></label><br>
   <input class="w3-input w3-border w3-light-grey" type="email" id="mail" name="mail" placeholder="Mail" value="${user.mail}" required autocomplete="email"><br>
   <label for="user" class="w3-text-black"><b>Date of Birth:</b></label><br>
@@ -49,7 +49,7 @@
 		<input type="checkbox" id="tenis" name="sport_interests" value="tenis">
 		<label for="tenis">Tenis</label><br>
 	</div>
-</p>
+	</p>
   
   
   

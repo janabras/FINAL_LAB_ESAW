@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<script src="js/tweets.js?3"></script>
+<script src="js/tweets.js?4"></script>
 <c:if test="${tweets.size() == 0}">
 <h2 style="color: black; text-align: center; font-size: 62px; font-family: 'Your Custom Font', Verdana;">Start following People to get tweets!</h2>
 </c:if>
@@ -29,7 +29,7 @@
 			</c:if>
 			<c:if test="${t.isLiked}">
 				<button id="button_${t.id}" type="button"
-					class="likeTweet w3-button w3-theme w3-hover-light-grey w3-margin-bottom">
+					class="likeTweet w3-button w3-red w3-hover-light-grey w3-margin-bottom">
 					<i class="fa fa-heart"></i> &nbsp;Like
 				</button>
 			</c:if>
@@ -37,7 +37,7 @@
 
 		<c:if test="${user == null}">
 			<button disabled type="button"
-				class="likeTweet w3-button w3-theme w3-margin-bottom">
+				class="likeTweet w3-button w3-red w3-margin-bottom">
 				<i class="fa fa-heart"></i> &nbsp;Like
 			</button>
 		</c:if>

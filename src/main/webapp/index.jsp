@@ -19,6 +19,7 @@ $(document).ready(function(){
 	// $('#rcolumn').load('GetUserInfo');
 	
 	$.ajaxSetup({ cache: false }); //Avoids Internet Explorer caching!	
+
 	$(document).on("click",".menu",function(event) {
 		actualPage = $(this).attr('id');
 		$('#content').load($(this).attr('id'));
@@ -26,6 +27,7 @@ $(document).ready(function(){
 		$('#rcolumn').load('GetUserInfo');
 		event.preventDefault();
 	});
+	
 	$(document).on("click","#MainController",function(event) {
 		actualPage = "GetFollowedTweets";
 		$('#content').load(actualPage);
@@ -33,9 +35,23 @@ $(document).ready(function(){
 		$('#rcolumn').load(null);
 		event.preventDefault();
 	});
-	
+	$(document).on("click","#LogoutController",function(event) {
+		$('#content').load($(this).attr('id'));
+		$('#lcolumn').load(null);
+		$('#rcolumn').load(null);
+		event.preventDefault();
+	});
 	$(document).on("submit","#editOther", function(event) {
-		$('#content').load("EditOtherProfile", {id: $('#id').prop("content"), name: $('#name').val(), mail: $('#mail').val()});
+		const checkboxes = document.getElementsByName('sport_interests');
+		const checkedCheckboxes = [];
+		
+		checkboxes.forEach(function (checkbox) {
+		  if (checkbox.checked) {
+		    checkedCheckboxes.push(checkbox.value);
+		  }
+		});
+		
+		$('#content').load("EditOtherProfile", {id: $('#id').prop("content"), name: $('#name').val(), mail: $('#mail').val(), pwd: $('#pwd').val(), sport_interests: JSON.stringify(checkedCheckboxes)});
 		event.preventDefault();
 	});
 	

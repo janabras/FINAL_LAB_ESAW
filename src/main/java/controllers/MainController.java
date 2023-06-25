@@ -101,6 +101,12 @@ public class MainController extends HttpServlet {
 			ManageTweets tweetManager = new ManageTweets();
 			User user = (User) session.getAttribute("user");
 			tweets = tweetManager.getUsersFollowedTweets(user.getId(), 0, 10);
+			
+			for (Iterator<Tweet> iterator = tweets.iterator(); iterator.hasNext();) {
+                Tweet next = iterator.next();
+                next.setLiked(tweetManager.isLikedTweet(user.getId(), next.getId()));
+            }
+			
 			tweetManager.finalize();
 			request.setAttribute("tweets",tweets);
 			request.setAttribute("user", user);
@@ -112,6 +118,11 @@ public class MainController extends HttpServlet {
 			List<Comment> comments = Collections.emptyList();
 			
 			comments = commentManager.getComments();
+			
+			for (Iterator<Comment> iterator = comments.iterator(); iterator.hasNext();) {
+				Comment next = iterator.next();
+	            next.setLiked(commentManager.isLikedComment(user.getId(), next.getId()));
+	        }
 			
 			commentManager.finalize();
 			

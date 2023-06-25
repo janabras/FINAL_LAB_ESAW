@@ -6,6 +6,10 @@
 <meta id="id" name="id" content="${userAccesed.id}">
 </head>
 <body>
+
+
+
+
 <div class="w3-container w3-card w3-round w3-white w3-section w3-center">
   <h4>Edit ${userAccesed.name} profile</h4>
   
@@ -14,12 +18,32 @@
   <form id="editOther" action="EditOtherProfile" method="post" enctype="multipart/form-data">
     <p class="w3-left-align">
       <i class="fa fa-user fa-fw w3-margin-right"></i>
-      <input id="name" type="text" name="name" value="${userAccesed.name}" required>
+      <input id="name" type="text" name="name" value="${userAccesed.name}" pattern="^.{1,50}$" required>
     </p>
     <p class="w3-left-align">
       <i class="fa fa-envelope fa-fw w3-margin-right"></i>
       <input id="mail" type="email" name="mail" value="${userAccesed.mail}" required>
     </p>
+    
+    <p class="w3-left-align">
+      <i class="fa fa-key fa-fw w3-margin-right"></i>
+      <input id="pwd" type="password" name="pwd" required pattern="^(?=.*[A-Z])(?=.*[!@#$&*\-])(?=.{8,})\S+$">
+    </p>
+    
+    <div class="w3-left-align" style="margin-left:43px">
+	<label class="w3-text-black"><b>Sport interests:</b></label><br>
+	<div class="w3-left-align" style="margin-bottom: 10px;">
+		<input type="checkbox" id="futbol" name="sport_interests" value="futbol">
+		<label for="futbol">Futbol</label><br>
+		<input type="checkbox" id="mma" name="sport_interests" value="mma">
+		<label for="mma">MMA</label><br>
+		<input type="checkbox" id="basket" name="sport_interests" value="basket">
+		<label for="basket">Baloncesto</label><br>
+		<input type="checkbox" id="tenis" name="sport_interests" value="tenis">
+		<label for="tenis">Tenis</label><br>
+	</div>
+	</div>
+    
     <p class="w3-left-align">
       <i class="fa fa-image fa-fw w3-margin-right"></i>
       <input type="file" id="picture" name="picture" accept="image/*" onchange="previewImage(event)">

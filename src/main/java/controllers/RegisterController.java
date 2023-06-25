@@ -44,12 +44,19 @@ public class RegisterController extends HttpServlet {
 			BeanUtils.populate(user, request.getParameterMap());
 		   
 		   if (manager.isComplete(user) && manager.correctAge(user)) {
+			   if(user.getError().get("user") || user.getError().get("mail")) {
+				   System.out.println(" forwarding to ViewRegisterForm.");
+				   request.setAttribute("user",user);
+				   RequestDispatcher dispatcher = request.getRequestDispatcher("ViewRegisterForm.jsp");
+				   dispatcher.forward(request, response);
+			   } else {
+				   manager.addUser(user);
+				   manager.finalize();
+				   System.out.println(" user ok, forwarding to ViewLoginForm.");
+				   RequestDispatcher dispatcher = request.getRequestDispatcher("ViewLoginForm.jsp");
+				   dispatcher.forward(request, response);
+			   }
 			   
-			   manager.addUser(user);
-			   manager.finalize();
-			   System.out.println(" user ok, forwarding to ViewLoginForm.");
-			   RequestDispatcher dispatcher = request.getRequestDispatcher("ViewLoginForm.jsp");
-			   dispatcher.forward(request, response);
 		   
 		   } 
 		   

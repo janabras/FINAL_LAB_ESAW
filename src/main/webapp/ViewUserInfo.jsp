@@ -4,6 +4,16 @@
 <head>
 <meta id="id" name="id" content="${userAccesed.id}">
 </head>
+
+<c:if test="${error}">
+<div class="w3-panel w3-theme-l4 w3-display-container">
+  <span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-large w3-display-topright">&times;</span>
+  <p> Provided credentials are already in use! </p>
+</div>
+</c:if>
+
+
 <div class="w3-container w3-card w3-round w3-white w3-section w3-center">
   <h4>Welcome to ${userAccesed.name} profile!</h4>
   <p><img src="imgs/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>

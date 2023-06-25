@@ -23,10 +23,10 @@ $(document).ready(function() {
 		var id_tweet = $(this).parent().attr("id");
 		var likes = $("#likes_" + id_tweet).text();
 		if ($("#button_" + id_tweet).hasClass('w3-light-grey')) {
-			$("#button_" + id_tweet).removeClass('w3-light-grey w3-hover-red').addClass('w3-theme w3-hover-light-grey');
+			$("#button_" + id_tweet).removeClass('w3-light-grey w3-hover-red').addClass('w3-red w3-hover-light-grey');
 			$("#likes_" + id_tweet).text(parseInt(likes) + 1);
 		} else {
-			$("#button_" + id_tweet).removeClass('w3-theme w3-hover-light-grey').addClass('w3-light-grey w3-hover-red');
+			$("#button_" + id_tweet).removeClass('w3-red w3-hover-light-grey').addClass('w3-light-grey w3-hover-red');
 			$("#likes_" + id_tweet).text(parseInt(likes) - 1);
 		}
 	});

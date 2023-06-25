@@ -57,6 +57,7 @@ public class User implements java.io.Serializable {
 
 
 	public void setSport_interests(String[] sport_interests) {
+		System.out.println("intereses: "+sport_interests[0]);
 		this.sport_interests = sport_interests;
 	}
 
@@ -119,6 +120,7 @@ public class User implements java.io.Serializable {
 		} else {
 			// error[0] = false;
 			// error[1] = false;
+			error.put("user", false);
 			this.name = name;
 			
 			System.out.println("Username: " + name);
@@ -147,6 +149,7 @@ public class User implements java.io.Serializable {
 				// error[4] = false;
 				// error[3] = false;
 				this.mail = mail;
+				error.put("mail", false);
 				System.out.println(mail);
 			}
 		} else {

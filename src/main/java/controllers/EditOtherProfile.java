@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,10 +51,23 @@ public class EditOtherProfile extends HttpServlet {
         ManageUsers userManager = new ManageUsers();
         
             try {
+            	
                 BeanUtils.populate(userAccesed, request.getParameterMap());
-                System.out.println("Guardando info a " + userAccesed.getId());
-                System.out.println("Nueva info: " + userAccesed.getName() + " email: "+ userAccesed.getMail());
                 
+                String jsonString = userAccesed.getSport_interests()[0];
+
+                jsonString = jsonString.substring(1, jsonString.length() - 1);
+
+                String[] interests = jsonString.split(",");
+                
+                Pattern pattern = Pattern.compile("\"(.*?)\"");
+                for (int i = 0; i < interests.length; i++) {
+                    Matcher matcher = pattern.matcher(interests[i]);
+                    if (matcher.find()) {
+                    	interests[i] = matcher.group(1);
+                    }
+                }
+                userAccesed.setSport_interests(interests);
                 /*
                 System.out.println("1get");
                 Part filePart = request.getPart("picture");
@@ -94,7 +109,22 @@ public class EditOtherProfile extends HttpServlet {
                 }
 				*/
                 // Modify the user in the database
-                userManager.modifyUser(userAccesed);
+                
+                if (userManager.isAvaiableWithoutId(userAccesed.getName(), "name", userAccesed.getId()) && userManager.isAvaiableWithoutId(userAccesed.getMail(), "mail", userAccesed.getId())){
+                	userManager.modifyUser(userAccesed);
+                	//request.setAttribute("user", user);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnTimeline.jsp");
+                    dispatcher.forward(request, response);
+                }
+                else {
+                	request.setAttribute("userAccesed", userManager.getUser(userAccesed.getId()));
+                	request.setAttribute("error", true);
+                	request.setAttribute("access", true);
+                	RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewUserInfo.jsp");
+            		dispatcher.forward(request, response);
+                }
+                
+                
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
                 // Handle the exception appropriately
@@ -106,8 +136,8 @@ public class EditOtherProfile extends HttpServlet {
             //request.setAttribute("user", user);
         
         // Forward the request to the desired page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnTimeline.jsp");
-        dispatcher.forward(request, response);
+        //RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnTimeline.jsp");
+        //dispatcher.forward(request, response);
     }
 
 	/**

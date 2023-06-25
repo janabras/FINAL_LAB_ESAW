@@ -87,14 +87,21 @@ public class ManageUsers {
 	
 	/* Modify User */
 	public void modifyUser(User u) {
-		String query = "UPDATE users SET name = ?, mail = ? WHERE id = ?;";
+		String query = "UPDATE users SET name = ?, mail = ?, pwd = ?, sport_interests = ? WHERE id = ?;";
 		PreparedStatement statement = null;
 		try {
+			//Change owner of the comments
+			String previousName = getUser(u.getId()).getName();
+			ManageComments commentManager = new ManageComments();
+			commentManager.modifyOwner(previousName, u.getName());
+			
 			statement = db.prepareStatement(query);
 			statement.setString(1, u.getName());
 			statement.setString(2, u.getMail());
+			statement.setString(3, u.getPwd());
+			statement.setString(4, Arrays.toString(u.getSport_interests()));
 			// statement.setBoolean(3, u.isAdmin());
-			statement.setInt(3, u.getId());
+			statement.setInt(5, u.getId());
 			statement.executeUpdate();
 			statement.close();
 		} catch (SQLIntegrityConstraintViolationException e) {
@@ -153,6 +160,28 @@ public class ManageUsers {
 		try {
 			statement = db.prepareStatement(query);
 			statement.setString(1,value);
+			ResultSet rs = statement.executeQuery();
+			while (rs.next()) {
+				int val = rs.getInt("count");
+				if (val == 0)
+					returnStatement = true;
+			}
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return returnStatement;
+	}
+	
+	
+	public boolean isAvaiableWithoutId(String value, String field, int id) {
+		String query = "SELECT COUNT("+field+") AS count FROM users WHERE "+field+"=? AND id != ?";
+		PreparedStatement statement = null;
+		boolean returnStatement = false;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1,value);
+			statement.setInt(2,id);
 			ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
 				int val = rs.getInt("count");

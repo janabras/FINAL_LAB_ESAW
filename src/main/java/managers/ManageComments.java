@@ -3,7 +3,9 @@ package managers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import models.Comment;
@@ -101,6 +103,23 @@ private DB db = null ;
 			e.printStackTrace();
 		}
 		return returnstate;
+	}
+	
+	/*Modify User comment*/
+	public void modifyOwner(String previous, String newUser) {
+		String query = "UPDATE comments SET username = ? WHERE username = ?;";
+		PreparedStatement statement = null;
+		try {
+			statement = db.prepareStatement(query);
+			statement.setString(1, newUser);
+			statement.setString(2, previous);
+			statement.executeUpdate();
+			statement.close();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			System.out.println(e.getMessage());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	

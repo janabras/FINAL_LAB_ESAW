@@ -2,6 +2,14 @@
 	pageEncoding="UTF-8" session="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<c:if test="${error}">
+<div class="w3-panel w3-theme-l4 w3-display-container">
+  <span onclick="this.parentElement.style.display='none'"
+  class="w3-button w3-large w3-display-topright">&times;</span>
+  <p> Provided credentials are already in use! </p>
+</div>
+</c:if>
+
 <div class="w3-container w3-card w3-round w3-white w3-section w3-center">
 	<h4>Welcome to ${user.name} profile!</h4>
 	<p>

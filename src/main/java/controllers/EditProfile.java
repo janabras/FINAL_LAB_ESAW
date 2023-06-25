@@ -99,7 +99,18 @@ public class EditProfile extends HttpServlet {
                 }
 				*/
                 // Modify the user in the database
-                userManager.modifyUser(user);
+                if (userManager.isAvaiableWithoutId(user.getName(), "name", user.getId()) && userManager.isAvaiableWithoutId(user.getMail(), "mail", user.getId())){
+                	userManager.modifyUser(user);
+                	// Forward the request to the desired page
+                	request.setAttribute("user", user);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnTimeline.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                	request.setAttribute("user", userManager.getUser(user.getId()));
+                	request.setAttribute("error", true);
+                	RequestDispatcher dispatcher = request.getRequestDispatcher("/ViewOwnInfo.jsp");
+            		dispatcher.forward(request, response);
+                }
             } catch (IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
                 // Handle the exception appropriately
@@ -108,12 +119,10 @@ public class EditProfile extends HttpServlet {
             }
 
             // Set the updated user object as a request attribute
-            request.setAttribute("user", user);
+            
         }
 
-        // Forward the request to the desired page
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnTimeline.jsp");
-        dispatcher.forward(request, response);
+        
     }
 
 	/**
