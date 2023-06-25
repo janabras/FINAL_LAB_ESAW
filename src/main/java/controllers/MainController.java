@@ -100,7 +100,7 @@ public class MainController extends HttpServlet {
 			List<Tweet> tweets = Collections.emptyList();
 			ManageTweets tweetManager = new ManageTweets();
 			User user = (User) session.getAttribute("user");
-			tweets = tweetManager.getLoggedTweets(user.getId(), 0, 10);
+			tweets = tweetManager.getUsersFollowedTweets(user.getId(), 0, 10);
 			tweetManager.finalize();
 			request.setAttribute("tweets",tweets);
 			request.setAttribute("user", user);
