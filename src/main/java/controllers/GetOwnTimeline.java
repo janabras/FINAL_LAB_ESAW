@@ -28,7 +28,6 @@ public class GetOwnTimeline extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("loading-controller", "GetOwnTimeline");
-		System.out.println("XA");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("ViewOwnTimeline.jsp");
 		dispatcher.forward(request, response);
 		

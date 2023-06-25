@@ -3,6 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script src="js/tweets.js?3"></script>
+<c:if test="${tweets.size() == 0}">
+<h2 style="color: black; text-align: center; font-size: 62px; font-family: 'Your Custom Font', Verdana;">Start following People to get tweets!</h2>
+</c:if>
 <c:forEach var="t" items="${tweets}">
 	<div id="${t.id}"
 		class="w3-container w3-card w3-section w3-white w3-round w3-animate-opacity">

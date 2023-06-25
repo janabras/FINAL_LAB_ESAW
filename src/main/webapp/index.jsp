@@ -13,7 +13,7 @@
 
 
 <script type="text/javascript">
-var actualPage = null;
+var actualPage = "GetFollowedTweets";
 $(document).ready(function(){
 	// $('#lcolumn').load('GetNotFollowedUsers');
 	// $('#rcolumn').load('GetUserInfo');
@@ -22,6 +22,15 @@ $(document).ready(function(){
 	$(document).on("click",".menu",function(event) {
 		actualPage = $(this).attr('id');
 		$('#content').load($(this).attr('id'));
+		$('#lcolumn').load('GetNotFollowedUsers');
+		$('#rcolumn').load('GetUserInfo');
+		event.preventDefault();
+	});
+	$(document).on("click","#MainController",function(event) {
+		actualPage = "GetFollowedTweets";
+		$('#content').load(actualPage);
+		$('#lcolumn').load(null);
+		$('#rcolumn').load(null);
 		event.preventDefault();
 	});
 	
@@ -118,7 +127,9 @@ $(document).ready(function(){
     /* Add Like comment */
     $(document).on("click", ".likeComment", function (event) {
         var tweet = $(this).parent();
-        $.post("AddCommentLike", {id: $(this).parent().attr("id")});
+        $.post("AddCommentLike", {id: $(this).parent().attr("id")}, function(event){
+        	$("#content").load(actualPage);
+        });	
         event.preventDefault();
     });
 	
