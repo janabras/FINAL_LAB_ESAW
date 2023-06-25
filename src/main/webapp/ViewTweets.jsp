@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <script src="js/tweets.js?3"></script>
 <c:if test="${tweets.size() == 0}">
-<h2 style="color: black; text-align: center; font-size: 62px; font-family: 'Your Custom Font', Verdana;">Start following People to get tweets!</h2>
+<h2 style="color: black; text-align: center; font-size: 62px; font-family: 'Your Custom Font', Verdana;">Start Following People or Write Tweets!</h2>
 </c:if>
 <c:forEach var="t" items="${tweets}">
 	<div id="${t.id}"
