@@ -443,14 +443,14 @@ public class ManageUsers {
 				hasValue(user.getDob().toString()) &&
 				hasValue(user.getPwd()));
 	}
-	
+	/*
 	public boolean correctAge(User user) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.YEAR, -13);
 		Date thirteenYearsAgo = calendar.getTime();
 		return user.getDob().before(thirteenYearsAgo);
 	}
-	
+	*/
 	public boolean isLoginComplete(User user) {
 	    return(hasValue(user.getName()) &&
 	    	   hasValue(user.getPwd()) );

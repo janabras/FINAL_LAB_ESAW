@@ -43,8 +43,8 @@ public class RegisterController extends HttpServlet {
 			ManageUsers manager = new ManageUsers();
 			BeanUtils.populate(user, request.getParameterMap());
 		   
-		   if (manager.isComplete(user) && manager.correctAge(user)) {
-			   if(user.getError().get("user") || user.getError().get("mail")) {
+		   if (manager.isComplete(user)) {
+			   if(user.getError().get("user") || user.getError().get("mail") || user.getError().get("age")) {
 				   System.out.println(" forwarding to ViewRegisterForm.");
 				   request.setAttribute("user",user);
 				   RequestDispatcher dispatcher = request.getRequestDispatcher("ViewRegisterForm.jsp");
